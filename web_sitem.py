@@ -112,3 +112,13 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
+# Sitenin en altına ekleyebilirsin
+st.divider()
+st.markdown("""
+    <div style="text-align: center;">
+        <p>Görüntülenme Sayısı</p>
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Futku-portfoyo1-appbk8qmnbifmpps5h6sxgw.streamlit.app&count_bg=%23000000&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Ziyaret&edge_flat=false" />
+    </div>
+""", unsafe_allow_html=True)
+
