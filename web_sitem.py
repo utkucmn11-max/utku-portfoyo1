@@ -54,7 +54,7 @@ if not st.session_state.sayfa_acildi:
     st.write("<p style='text-align: center; color: #666;'>Devreleri tamamlamak için şimşeğe dokun!</p>", unsafe_allow_html=True)
     
     # Şimşek Butonu
-    if st.button("⚡"):
+    if st.button("1.png"):
         st.session_state.sayfa_acildi = True
         st.rerun()
     
@@ -126,4 +126,5 @@ else:
 
     st.write("##")
     st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
