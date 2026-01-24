@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 
 # Sayfa Konfigürasyonu
-st.set_page_config(page_title="Mehmet Utku Çimen | Portfolio", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="Mehmet Utku Çimen | Portfolio", page_icon=" Image.open(1.png)", layout="wide")
 
 # CSS ile Şimşek Butonunu Özelleştirme ve Ortalama
 st.markdown("""
@@ -126,3 +126,4 @@ else:
 
     st.write("##")
     st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
