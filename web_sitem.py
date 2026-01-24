@@ -1,105 +1,128 @@
 import streamlit as st
 from PIL import Image
-import base64
 
-# Sayfa Yapılandırması
-st.set_page_config(
-    page_title="Mehmet Utku Çimen | Portfolyo", 
-    page_icon="⚡", 
-    layout="wide", 
-    initial_sidebar_state="collapsed"
-)
+# Sayfa Konfigürasyonu
+st.set_page_config(page_title="Mehmet Utku Çimen | Portfolio", page_icon="⚡", layout="wide")
 
-# --- GİRİŞ KONTROLÜ (Session State) ---
-# Kullanıcının giriş yapıp yapmadığını tutar. Uygulama her yenilendiğinde bu bilgi kalır.
-if 'giris_yapildi' not in st.session_state:
-    st.session_state.giris_yapildi = False
-
-# --- GÖRSELİ BASE64 OLARAK KODA GÖMME ---
-# Streamlit'in harici görsel dosyalarını doğrudan yükleyemediği durumlarda kullanışlıdır.
-def get_base64_image(image_path):
-    try:
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
-    except FileNotFoundError:
-        st.error(f"⚠️ Görsel dosyası '{image_path}' bulunamadı. Lütfen klasöre ekle.")
-        return None
-    except Exception as e:
-        st.error(f"Görsel yüklenirken bir hata oluştu: {e}")
-        return None
-
-# --- CSS VE ANİMASYONLAR (Tüm uygulama için geçerli) ---
+# CSS ile Şimşek Butonunu Özelleştirme ve Ortalama
 st.markdown("""
     <style>
-    /* Streamlit'in varsayılan sidebar'ını gizle (giriş ekranında) */
-    [data-testid="stSidebar"] { display: none; }
-    
-    /* Ana uygulama arka plan rengi */
-    .stApp { background-color: #ffffff; color: #1a1a1a; }
-    
-    /* Giriş ekranı kapsayıcısı */
-    .cover-container {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background-color: white;
-        z-index: 9999; /* En üstte görünmesini sağlar */
+    .stButton > button {
+        display: block;
+        margin: 0 auto;
+        background-color: transparent;
+        border: none;
+        font-size: 100px;
+        transition: transform 0.3s, filter 0.3s;
+        cursor: pointer;
+    }
+    .stButton > button:hover {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 15px #FFD700);
+        background-color: transparent;
+        border: none;
+    }
+    .stButton > button:active {
+        color: #FFD700;
+        background-color: transparent;
+    }
+    .splash-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        height: 60vh;
     }
-
-    /* Şimşek Logosu stili */
-    .bolt-img {
-        width: 300px; /* Logo boyutu */
-        cursor: pointer; /* Tıklanabilir olduğunu belirtir */
-        transition: transform 0.3s ease; /* Fare üzerine gelince yumuşak geçiş */
-    }
-
-    .bolt-img:hover {
-        transform: scale(1.1) rotate(5deg); /* Fare üzerine gelince büyü ve dön */
-    }
-
-    /* Tıklama ipucu yazısı */
-    .click-hint {
-        margin-top: 20px;
-        color: #DAA520; /* Sarı renk */
-        font-weight: bold;
-        letter-spacing: 2px;
-        animation: blink 1.5s infinite; /* Yanıp sönme animasyonu */
-    }
-
-    @keyframes blink { 
-        0% {opacity: 0.3;} 
-        50% {opacity: 1;} 
-        100% {opacity: 0.3;} 
-    }
-    
-    /* Genel Bilgi Kutuları */
     .info-box {
-        background-color: #f0f2f6; /* Hafif gri arka plan */
-        border-radius: 8px;
         padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        min-height: 180px; /* Kutuların aynı hizada olmasını sağlar */
+        border-radius: 15px;
+        background-color: #f0f2f6;
+        border: 1px solid #e0e0e0;
+        height: 100%;
     }
-    .info-box h3 {
-        color: #000000;
-        margin-top: 0;
-        margin-bottom: 15px;
-    }
-    .info-box ul {
-        list-style-type: disc; /* Liste işaretlerini disk olarak ayarlar */
-        padding-left: 20px;
-    }
-    .info-box p, .info-box li {
-        color: #333333;
-        line-height: 1.6;
-    }# CSS kodlarının bittiği yer (temsili)
     </style>
-    """, unsafe_allow_html=True) # İşte bu satırı eklemelisin
+    """, unsafe_allow_html=True)
 
+# Session State ile sayfa kontrolü
+if 'sayfa_acildi' not in st.session_state:
+    st.session_state.sayfa_acildi = False
 
+# --- AÇILIŞ EKRANI ---
+if not st.session_state.sayfa_acildi:
+    st.markdown('<div class="splash-container">', unsafe_allow_html=True)
+    st.write("<h1 style='text-align: center; color: #333;'>Portfolyoya Giriş Yap</h1>", unsafe_allow_html=True)
+    st.write("<p style='text-align: center; color: #666;'>Devreleri tamamlamak için şimşeğe dokun!</p>", unsafe_allow_html=True)
+    
+    # Şimşek Butonu
+    if st.button("⚡"):
+        st.session_state.sayfa_acildi = True
+        st.rerun()
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
+# --- ANA SAYFA İÇERİĞİ ---
+else:
+    # Geri dönmek istersen diye küçük bir çıkış butonu (isteğe bağlı)
+    if st.sidebar.button("⬅️ Giriş Ekranına Dön"):
+        st.session_state.sayfa_acildi = False
+        st.rerun()
+
+    # Üst Kısım: Fotoğraf ve Başlık
+    col1, col2 = st.columns([1, 3])
+
+    with col1:
+        try:
+            img = Image.open("profil.jpg")
+            st.image(img, width=230)
+        except:
+            st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
+
+    with col2:
+        st.title("Mehmet Utku Çimen")
+        st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
+        st.write("📍 Tekirdağ, Kapaklı | 🎂 20 Yaşında")
+        st.write("🎓 Elektrik-Elektronik Mezunu")
+        st.write("""
+        Merhaba! Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
+        Teknolojiye olan tutkumla beraber Python dünyasında kendimi geliştiriyor ve dijital çözümler üretiyorum.
+        """)
+
+    st.divider()
+
+    # Orta Kısım: Yetenekler ve İletişim
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.markdown("""
+        <div class="info-box">
+            <h3>🛠️ Uzmanlık Alanları</h3>
+            <ul>
+                <li>Elektrik Devre Tasarımı</li>
+                <li>Elektronik Bakım & Onarım</li>
+                <li>Python ile Otomasyon</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown(f"""
+        <div class="info-box">
+            <h3>📫 İletişim & Sosyal Medya</h3>
+            <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
+            <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#1a1a1a;">59.utkucimen_</a></p>
+            <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#1a1a1a;">Utku Çimen</a></p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Alt Kısım: Projeler ve Hobiler
+    st.header("💻 Projelerim")
+    with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+        st.write("Şu an üzerinde çalıştığım projeler Python tabanlı otomasyon sistemleri üzerine odaklanıyor.")
+        st.warning("Gizlilik nedeniyle detaylar yakında paylaşılacaktır! 😂")
+
+    st.divider()
+    st.write("### 🎵 Hobiler")
+    st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
+
+    st.write("##")
+    st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
