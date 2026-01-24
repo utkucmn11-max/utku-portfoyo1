@@ -89,6 +89,20 @@ else:
         try:
             img
 
+import streamlit as st
+
+def main():
+    try:
+        st.title("Utku'nun Portfolyosu")
+        st.write("Hoş geldiniz!")
+        # Diğer kodlarını buraya ekle
+        
+    except Exception as e:
+        st.error(f"Sistemde bir hata oluştu: {e}")
+
+if __name__ == "__main__":
+    main()
+    
 
 
 
