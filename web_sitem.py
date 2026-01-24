@@ -102,7 +102,9 @@ src="http://googleusercontent.com/spotify.com/5"
 width="100%" height="352" frameBorder="0" allowfullscreen="" 
 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
 loading="lazy"></iframe>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True
+ # Linkin sonuna ?autoplay=1 eklemeyi dene:
+src="https://open.spotify.com/embed/track/SENIN_LINKIN?utm_source=generator&autoplay=1")           
 
 # Hobiler
 st.write("### 🎭 Hobiler")
@@ -110,3 +112,4 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
