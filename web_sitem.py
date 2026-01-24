@@ -1,26 +1,15 @@
 import streamlit as st
 from PIL import Image
 
-# Sayfa Yapılandırması (Sidebar'ı tamamen gizlemek için başlangıçta kapalı tutuyoruz)
+# Sayfa Yapılandırması
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown("""
     <style>
-    /* Sol menüyü tamamen gizle */
-    [data-testid="stSidebar"] {
-        display: none;
-    }
-    
-    /* Arka plan ve yazı renkleri */
-    .stApp {
-        background-color: #ffffff;
-    }
-    h1, h2, h3, h4, p, li, span, label, div {
-        color: #1a1a1a !important;
-    }
-
-    /* Kart tasarımı */
+    [data-testid="stSidebar"] { display: none; }
+    .stApp { background-color: #ffffff; }
+    h1, h2, h3, h4, p, li, span, label, div { color: #1a1a1a !important; }
     .info-box {
         background-color: #f8f9fa;
         padding: 20px;
@@ -28,8 +17,6 @@ st.markdown("""
         border: 1px solid #e9ecef;
         margin-bottom: 20px;
     }
-
-    /* Havada uçuşan el aletleri animasyonu */
     @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
         50% { transform: translateY(-25px) rotate(15deg); opacity: 0.5; }
@@ -53,7 +40,6 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- ANA SAYFA İÇERİĞİ ---
-# Üst Kısım: Fotoğraf ve Başlık
 col1, col2 = st.columns([1, 3])
 
 with col1:
@@ -100,14 +86,26 @@ with c2:
     </div>
     """, unsafe_allow_html=True)
 
-# Alt Kısım: Projeler ve Hobiler
+# Alt Kısım: Projeler
 st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Şu an üzerinde çalıştığım projeler Python tabanlı otomasyon sistemleri üzerine odaklanıyor.")
     st.warning("Gizlilik nedeniyle detaylar yakında paylaşılacaktır! 😂")
 
 st.divider()
-st.write("### 🎵 Hobiler")
+
+# --- MÜZİK BÖLÜMÜ (SPOTIFY) ---
+st.write("### 🎵 Dinlediğim Müzikler")
+st.markdown("""
+<iframe data-testid="embed-iframe" style="border-radius:12px" 
+src="http://googleusercontent.com/spotify.com/5" 
+width="100%" height="352" frameBorder="0" allowfullscreen="" 
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+loading="lazy"></iframe>
+""", unsafe_allow_html=True)
+
+# Hobiler
+st.write("### 🎭 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
