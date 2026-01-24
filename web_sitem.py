@@ -97,6 +97,9 @@ st.markdown("""
     .info-box p, .info-box li {
         color: #333333;
         line-height: 1.6;
-    })
+    }# CSS kodlarının bittiği yer (temsili)
+    </style>
+    """, unsafe_allow_html=True) # İşte bu satırı eklemelisin
+
 
 
