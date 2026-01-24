@@ -19,7 +19,6 @@ st.markdown("""
         margin-bottom: 20px;
     }
 
-    /* Müzik kutusu için özel parlama efekti */
     .music-container {
         border: 2px solid #1DB954;
         border-radius: 15px;
@@ -108,11 +107,10 @@ st.divider()
 st.write("### 🎵 Dinlediğim Müzik")
 st.info("💡 Müziği başlatmak için aşağıdaki oynat butonuna basabilirsin.")
 
-# Senin verdiğin linki buraya entegre ettim
 st.markdown("""
 <div class="music-container">
     <iframe style="border-radius:12px" 
-    src="http://googleusercontent.com/spotify.com/7" 
+    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGvPBcmS" 
     width="100%" height="152" frameBorder="0" allowfullscreen="" 
     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
     loading="lazy"></iframe>
@@ -127,6 +125,3 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.divider()
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
-</style>
-""",unsafe_allow-html=true)
-
