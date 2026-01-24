@@ -10,7 +10,6 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     .stApp { background-color: #ffffff; }
     h1, h2, h3, h4, p, li, span, label, div { color: #1a1a1a !important; }
-    
     .info-box {
         background-color: #f8f9fa;
         padding: 20px;
@@ -18,14 +17,6 @@ st.markdown("""
         border: 1px solid #e9ecef;
         margin-bottom: 20px;
     }
-
-    .music-container {
-        border: 2px solid #1DB954;
-        border-radius: 15px;
-        padding: 10px;
-        margin-top: 20px;
-    }
-
     @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
         50% { transform: translateY(-25px) rotate(15deg); opacity: 0.5; }
@@ -90,8 +81,8 @@ with c2:
     <div class="info-box">
         <h3>📫 İletişim & Sosyal Medya</h3>
         <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-        <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#1a1a1a;">59.utkucimen_</a></p>
-        <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" target="_blank" style="color:#1a1a1a;">Utku Çimen</a></p>
+        <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#1a1a1a;">59.utkucimen_</a></p>
+        <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#1a1a1a;">Utku Çimen</a></p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -103,25 +94,18 @@ with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
 
 st.divider()
 
-# --- MÜZİK BÖLÜMÜ (SPOTIFY) ---
-st.write("### 🎵 Dinlediğim Müzik")
-st.info("💡 Müziği başlatmak için aşağıdaki oynat butonuna basabilirsin.")
+# --- MÜZİK ÇALAR BÖLÜMÜ ---
+st.write("### 🎵 Favori Parçam")
+try:
+    # "muzikler" yazan yere kendi klasör adını yazmalısın (Örn: "assets" veya "audio")
+    audio_file = open('muzikler/sarki.mp3', 'rb')
+    audio_bytes = audio_file.read()
+    st.audio(audio_bytes, format='audio/mp3')
+except FileNotFoundError:
+    st.error("🎵 Müzik dosyası belirtilen klasörde bulunamadı.")
 
-st.markdown("""
-<div class="music-container">
-    <iframe style="border-radius:12px" 
-    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGvPBcmS" 
-    width="100%" height="152" frameBorder="0" allowfullscreen="" 
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-    loading="lazy"></iframe>
-</div>
-""", unsafe_allow_html=True)
-
-st.write("##")
-
-# Hobiler
-st.write("### 🎭 Hobiler")
+st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
-st.divider()
+st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
