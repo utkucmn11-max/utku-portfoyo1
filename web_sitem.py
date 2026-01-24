@@ -63,7 +63,7 @@ st.divider()
 
 # Orta Kısım: Yetenekler ve İletişim
 c1, c2 = st.columns(2)
-klasor_adi = "musıc"
+klasor_adi = "UtkuWeb"
 with c1:
     st.markdown("""
     <div class="info-box">
@@ -98,7 +98,7 @@ st.divider()
 st.write("### 🎵 Favori Parçam")
 try:
     # "muzikler" yazan yere kendi klasör adını yazmalısın (Örn: "assets" veya "audio")
-    audio_file = open('musıc/sarki.mp3', 'rb')
+    audio_file = open('UtkuWeb/sarki.mp3', 'rb')
     audio_bytes = audio_file.read()
     st.audio(audio_bytes, format='audio/mp3')
 except FileNotFoundError:
@@ -109,5 +109,6 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
