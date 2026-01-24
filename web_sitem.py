@@ -98,7 +98,7 @@ st.divider()
 st.write("### 🎵 Favori Parçam")
 try:
     # "muzikler" yazan yere kendi klasör adını yazmalısın (Örn: "assets" veya "audio")
-    audio_file = open('muzikler/sarki.mp3', 'rb')
+    audio_file = open('WEBUtku/sarki.mp3', 'rb')
     audio_bytes = audio_file.read()
     st.audio(audio_bytes, format='audio/mp3')
 except FileNotFoundError:
@@ -109,3 +109,4 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
