@@ -63,7 +63,7 @@ st.divider()
 
 # Orta Kısım: Yetenekler ve İletişim
 c1, c2 = st.columns(2)
-
+klasor_adi = "musıc"
 with c1:
     st.markdown("""
     <div class="info-box">
@@ -109,4 +109,5 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
