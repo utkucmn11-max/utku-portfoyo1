@@ -29,7 +29,7 @@ def get_base64_image(image_path):
         return None
 
 # --- CSS VE ANİMASYONLAR (Tüm uygulama için geçerli) ---
-st.markdown(""")
+st.markdown("""
     <style>
     /* Streamlit'in varsayılan sidebar'ını gizle (giriş ekranında) */
     [data-testid="stSidebar"] { display: none; }
@@ -97,5 +97,6 @@ st.markdown(""")
     .info-box p, .info-box li {
         color: #333333;
         line-height: 1.6;
-    }
+    })
+
 
