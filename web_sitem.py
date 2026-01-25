@@ -111,7 +111,7 @@ st.divider()
 
 # --- MÜZİK VE HOBİLER ---
 st.write("### 🎵 Favori Parçam")
-st.write("(AC-DC)BLACK-İN-BLACK")
+st.write("(AC-DC) BACK-İN-BLACK ")
 
 # Otomatik bulma fonksiyonu
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -132,6 +132,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
