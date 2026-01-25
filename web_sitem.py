@@ -60,7 +60,7 @@ col1, col2 = st.columns([1, 3])
 with col1:
     try:
         img = Image.open("profil.jpg")
-        st.image(img, width=230)
+        st.image(img, width=300)
     except:
         st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
 
@@ -132,6 +132,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
