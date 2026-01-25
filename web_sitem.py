@@ -73,8 +73,7 @@ with col2:
     Merhaba! Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
     Teknolojiye olan tutkumla beraber Python dünyasında kendimi geliştiriyor ve dijital çözümler üretiyorum.
     """)
-    st.write("Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.")
-    st.write("Mevlana")
+    st.write("Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.")st.write("Mevlana")
 st.divider()
 
 # --- ORTA KISIM: Yetenekler ve İletişim (Yan Yana) ---
@@ -133,6 +132,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
