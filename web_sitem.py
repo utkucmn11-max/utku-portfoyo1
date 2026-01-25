@@ -87,6 +87,8 @@ with c1:
             <li>Elektrik Devre Tasarımı</li>
             <li>Elektronik Bakım & Onarım</li>
             <li>Python ile Otomasyon</li>
+            <li>3D Printer Model Tasarımı & Model Baskı Alımı</li>
+        
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -132,6 +134,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
