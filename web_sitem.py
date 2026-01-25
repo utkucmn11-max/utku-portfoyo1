@@ -67,7 +67,7 @@ with col1:
 with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
-    st.write("📍 Tekirdağ, Kapaklı | 🎂 20 Yaşında")
+    st.write("📍 Tekirdağ | 🎂 20 Yaşında")
     st.write("🎓 Elektrik-Elektronik Mezunu")
     st.write("""
     Merhaba! Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
@@ -132,6 +132,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
