@@ -9,24 +9,59 @@ st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡",
 st.markdown("""
     <style>
     [data-testid="stSidebar"] { display: none; }
-    .stApp { background-color: #ffffff; }
+    .stApp { background-color: #ffffff; position: relative; }
     h1, h2, h3, h4, p, li, span, label, div { color: #1a1a1a !important; }
+    
+    /* --- YENİ ŞİMŞEK EFEKTİ --- */
+    @keyframes lightning-flash {
+        0%, 95%, 98%, 100% { opacity: 0; }
+        96%, 99% { opacity: 0.15; } /* Çakma parlaklığı */
+    }
+
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: #007bff; /* Şimşek rengi */
+        z-index: 1; /* İçeriğin arkasında kalması için */
+        animation: lightning-flash 7s infinite; /* 7 saniyede bir çakar */
+        pointer-events: none;
+    }
+    /* ------------------------- */
+
     .info-box {
         background-color: #f8f9fa;
         padding: 20px;
         border-radius: 15px;
         border: 1px solid #e9ecef;
         margin-bottom: 20px;
+        position: relative;
+        z-index: 2; /* Şimşeğin üstünde görünmesi için */
     }
+
+    .music-container {
+        border: 2px solid #1DB954;
+        border-radius: 15px;
+        padding: 10px;
+        margin-top: 20px;
+        position: relative;
+        z-index: 2;
+    }
+
     @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
         50% { transform: translateY(-25px) rotate(15deg); opacity: 0.5; }
         100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
     }
     .floating-icon {
-        position: fixed; font-size: 40px; animation: float 5s ease-in-out infinite; z-index: 0; pointer-events: none;
+        position: fixed;
+        font-size: 40px;
+        animation: float 5s ease-in-out infinite;
+        z-index: 0;
+        pointer-events: none;
     }
     </style>
+    
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
     <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
     <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
@@ -112,3 +147,4 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
