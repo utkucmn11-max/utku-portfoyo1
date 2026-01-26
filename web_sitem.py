@@ -46,7 +46,7 @@ class Lightning {
     }
     draw() {
         if (this.life <= 0) return;
-        ctx.strokeStyle = `rgba(0, 150, 255, ${this.opacity})`; // Elektrik mavisi
+        ctx.strokeStyle = `rgba(10,300, 550, ${this.opacity})`; // Elektrik mavisi
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         for (let s of this.segments) {
@@ -182,6 +182,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
