@@ -106,7 +106,7 @@ with col2:
     st.write("📍 Tekirdağ | 🎂 20 Yaşında")
     st.write("🎓 Elektrik-Elektronik Mezunu")
     st.write("Merhaba! Ben Utku. Elektrik-elektronik uzmanlığımı Python ile birleştiriyorum.")
-    st.title("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
+    st.write("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
     st.write("(MEVLANA)")
 
 st.divider()
@@ -148,6 +148,7 @@ if not found:
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
 
 
