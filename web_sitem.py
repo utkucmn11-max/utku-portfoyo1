@@ -16,7 +16,7 @@ st.markdown(
     <style>
     /* Pinterest'teki GIF'i tüm arka plana sabitler */
     .stApp {{
-        background-image: url("https://i.pinimg.com/originals/65/d8/85/65d8852fee19c22b80921cbcf3e65197.gif?nii=t");
+        background-image: url("https://i.pinimg.com/originals/55/d8/75/65d8852fee19c22b80921cbcf3e65197.gif?nii=t");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -159,5 +159,6 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
