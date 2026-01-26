@@ -99,7 +99,7 @@ st.markdown("""
 
     // Rastgele aralıklarla yıldırım çaktır
     function loop() {
-        if (Math.random() > 0.90) {
+        if (Math.random() > 1) {
             createLightning();
         }
         requestAnimationFrame(loop);
@@ -196,4 +196,5 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
