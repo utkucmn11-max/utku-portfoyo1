@@ -121,6 +121,7 @@ with c2:
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
     <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#1a1a1a;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
 st.header("💻 Projelerim")
@@ -148,6 +149,7 @@ if not found:
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
 
 
