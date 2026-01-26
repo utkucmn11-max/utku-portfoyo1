@@ -31,7 +31,7 @@ st.markdown("""
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5); /* Arka planı %50 karartır */
-        backdrop-filter: brightness(0.6); /* Beyaz patlamaların şiddetini %100 düşürür */
+        backdrop-filter: brightness(0.6); /* Beyaz patlamaların şiddetini %300 düşürür */
         z-index: -1;
     }
 
@@ -155,6 +155,7 @@ st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 st.write("##")
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
 
 
 
