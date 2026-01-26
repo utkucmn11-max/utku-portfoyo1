@@ -72,7 +72,7 @@ class Lightning {
 
 function animate() {
     ctx.clearRect(0, 0, width, height);
-    if (Math.random() < 0.04) { // Çakma sıklığı artırıldı
+    if (Math.random() < 0.09) { // Çakma sıklığı artırıldı
         lightning.push(new Lightning());
     }
     lightning.forEach((l, i) => {
@@ -160,3 +160,4 @@ with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
 
 st.divider()
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
+
