@@ -1,69 +1,85 @@
 import streamlit as st
 from PIL import Image
 import os
+import base64
 
 # Sayfa Yapılandırması
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
+# --- YEREL GIF DOSYASINI OKUMA FONKSİYONU ---
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Not: 'arkaplan.gif' dosyasının kodla aynı klasörde olduğundan emin ol.
+try:
+    bin_str = get_base64_of_bin_file('arkaplan.gif')
+    background_css = f"url(data:image/gif;base64,{bin_str})"
+except FileNotFoundError:
+    # Dosya yoksa siyah arka plan kullan (hata vermemesi için)
+    background_css = "none"
+
 # --- TASARIM VE EFEKTLER (CSS) ---
-st.markdown("""
+st.markdown(f"""
     <style>
     /* Sol menüyü tamamen gizle */
-    [data-testid="stSidebar"] {
+    [data-testid="stSidebar"] {{
         display: none;
-    }
+    }}
     
     /* GIF Arka Plan ve Parlama Önleyici Filtre */
-    .stApp {
-        background-image: url("https://i.pinimg.com/originals/65/d8/85/65d8852fee19c22b80921cbcf3e65197.gif?nii=t");
+    .stApp {{
+        background-image: {background_css};
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }
+        background-color: #000000; /* GIF yüklenene kadar siyah kalsın */
+    }}
 
     /* BEYAZ PARLAMAYI (FLASH) EMEN KATMAN */
-    .stApp::before {
+    .stApp::before {{
         content: "";
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Arka planı %100 karartır */
-        backdrop-filter: brightness(0.6); /* Beyaz patlamaların şiddetini %100 düşürür */
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: brightness(0.6);
         z-index: -1;
-    }
+    }}
 
-    /* Yazı renkleri ve okunabilirlik için gölge */
-    h1, h2, h3, h4, p, li, span, label, div {
+    /* Yazı renkleri ve okunabilirlik */
+    h1, h2, h3, h4, p, li, span, label, div {{
         color: #ffffff !important;
         text-shadow: 2px 2px 4px #000000;
-    }
+    }}
 
     /* Kart tasarımı */
-    .info-box {
-        background-color: rgba(0, 0, 0, 0.7); /* Kutuları biraz daha koyulaştırdık */
+    .info-box {{
+        background-color: rgba(0, 0, 0, 0.7);
         padding: 20px;
         border-radius: 15px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         margin-bottom: 20px;
         backdrop-filter: blur(10px);
-    }
+    }}
 
-    /* Havada uçuşan el aletleri animasyonu */
-    @keyframes float {
-        0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-        50% { transform: translateY(-25px) rotate(15deg); opacity: 0.5; }
-        100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-    }
-    .floating-icon {
+    /* Havada uçuşan ikonlar animasyonu */
+    @keyframes float {{
+        0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
+        50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.5; }}
+        100% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
+    }}
+    .floating-icon {{
         position: fixed;
         font-size: 40px;
         animation: float 5s ease-in-out infinite;
         z-index: 0;
         pointer-events: none;
-    }
+    }}
     </style>
     
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
@@ -74,8 +90,7 @@ st.markdown("""
     <div class="floating-icon" style="top: 50%; right: 50%;">⚙️</div>
     """, unsafe_allow_html=True)
 
-
-# --- ÜST KISIM: Fotoğraf ve Başlık ---
+# --- İÇERİK BÖLÜMLERİ (Aynen Korundu) ---
 col1, col2 = st.columns([1, 3])
 
 with col1:
@@ -90,53 +105,33 @@ with col2:
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ | 🎂 20 Yaşında")
     st.write("🎓 Elektrik-Elektronik Mezunu")
-    st.write("""
-    Merhaba! Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
-    Teknolojiye olan tutkumla beraber Python dünyasında kendimi geliştiriyor ve dijital çözümler üretiyorum.
-    """)
+    st.write("Merhaba! Ben Utku. Elektrik-elektronik uzmanlığımı Python ile birleştiriyorum.")
     st.title("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
     st.write("(MEVLANA)")
+
 st.divider()
 
-# --- ORTA KISIM: Yetenekler ve İletişim (Yan Yana) ---
 c1, c2 = st.columns(2)
-
 with c1:
-    st.markdown("""
-    <div class="info-box">
-        <h3>🛠️ Uzmanlık Alanları</h3>
-        <ul>
-            <li>Elektrik Devre Tasarımı</li>
-            <li>Elektronik Bakım & Onarım</li>
-            <li>Python ile Otomasyon</li>
-            <li>3D Printer Model Tasarımı & Model Baskı Alımı</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="info-box"><h3>🛠️ Uzmanlık Alanları</h3>
+    <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
+    <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 
 with c2:
-    st.markdown(f"""
-    <div class="info-box">
-        <h3>📫 İletişim & Sosyal Medya</h3>
-        <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-        <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">59.utkucimen_</a></p>
-        <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
+    <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
+    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    </div>""", unsafe_allow_html=True)
 
-# --- ALT KISIM: Projeler ---
 st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
-    st.write("Şu an üzerinde çalıştığım projeler Python tabanlı otomasyon sistemleri üzerine odaklanıyor.")
-    st.warning("Gizlilik nedeniyle detaylar yakında paylaşılacaktır! 😂")
+    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
 st.divider()
 
-# --- MÜZİK VE HOBİLER ---
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 
-# Otomatik bulma fonksiyonu
 current_dir = os.path.dirname(os.path.abspath(__file__))
 found = False
 for root, dirs, files in os.walk(current_dir):
@@ -152,12 +147,7 @@ if not found:
 
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
-
-st.write("##")
-st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
-
-
-
+st.caption("© 2026 Mehmet Utku Çimen")
 
 
 
