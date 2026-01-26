@@ -2,73 +2,68 @@ import streamlit as st
 from PIL import Image
 import os
 
-# --- 1. SAYFA YAPILANDIRMASI ---
-st.set_page_config(
-    page_title="Mehmet Utku Çimen | Portfolyo", 
-    page_icon="⚡", 
-    layout="wide", 
-    initial_sidebar_state="collapsed"
-)
+# Sayfa Yapılandırması
+st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
-# --- 2. GIF ARKA PLAN VE ÖZEL TASARIM (CSS) ---
-st.markdown(
-    f"""
+# --- TASARIM VE EFEKTLER (CSS) ---
+st.markdown("""
     <style>
-    /* Pinterest'teki GIF'i tüm arka plana sabitler */
-    .stApp {{
+    /* Sol menüyü tamamen gizle */
+    [data-testid="stSidebar"] {
+        display: none;
+    }
+    
+    /* GIF Arka Plan ve Parlama Önleyici Filtre */
+    .stApp {
         background-image: url("https://i.pinimg.com/originals/65/d8/85/65d8852fee19c22b80921cbcf3e65197.gif?nii=t");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }}
+    }
 
-    /* İçeriğin okunabilmesi için arka plana %60 siyah katman ekler */
-    .stApp::before {{
+    /* BEYAZ PARLAMAYI (FLASH) EMEN KATMAN */
+    .stApp::before {
         content: "";
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(0, 0, 0, 0.5); /* Arka planı %50 karartır */
+        backdrop-filter: brightness(0.6); /* Beyaz patlamaların şiddetini %40 düşürür */
         z-index: -1;
-    }}
+    }
 
-    /* Sol menüyü gizle */
-    [data-testid="stSidebar"] {{
-        display: none;
-    }}
-    
-    /* Yazı renklerini beyaz yapar ve hafif gölge ekler */
-    h1, h2, h3, h4, p, li, span, label, div {{
+    /* Yazı renkleri ve okunabilirlik için gölge */
+    h1, h2, h3, h4, p, li, span, label, div {
         color: #ffffff !important;
-        text-shadow: 1px 1px 3px #000000;
-    }}
+        text-shadow: 2px 2px 4px #000000;
+    }
 
-    /* Bilgi kutuları (Cam Efekti) */
-    .info-box {{
-        background-color: rgba(255, 255, 255, 0.1);
+    /* Kart tasarımı */
+    .info-box {
+        background-color: rgba(0, 0, 0, 0.7); /* Kutuları biraz daha koyulaştırdık */
         padding: 20px;
         border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         margin-bottom: 20px;
         backdrop-filter: blur(10px);
-    }}
+    }
 
     /* Havada uçuşan el aletleri animasyonu */
-    @keyframes float {{
-        0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.3; }}
-        50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.6; }}
-        100% {{ transform: translateY(0px) rotate(0deg); opacity: 0.3; }}
-    }}
-    .floating-icon {{
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+        50% { transform: translateY(-25px) rotate(15deg); opacity: 0.5; }
+        100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+    }
+    .floating-icon {
         position: fixed;
         font-size: 40px;
         animation: float 5s ease-in-out infinite;
         z-index: 0;
         pointer-events: none;
-    }}
+    }
     </style>
     
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
@@ -80,7 +75,7 @@ st.markdown(
     """, unsafe_allow_html=True)
 
 
-# --- 3. ÜST KISIM: Fotoğraf ve Başlık ---
+# --- ÜST KISIM: Fotoğraf ve Başlık ---
 col1, col2 = st.columns([1, 3])
 
 with col1:
@@ -103,7 +98,7 @@ with col2:
     st.write("(MEVLANA)")
 st.divider()
 
-# --- 4. ORTA KISIM: Yetenekler ve İletişim ---
+# --- ORTA KISIM: Yetenekler ve İletişim (Yan Yana) ---
 c1, c2 = st.columns(2)
 
 with c1:
@@ -129,7 +124,7 @@ with c2:
     </div>
     """, unsafe_allow_html=True)
 
-# --- 5. ALT KISIM: Projeler ---
+# --- ALT KISIM: Projeler ---
 st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Şu an üzerinde çalıştığım projeler Python tabanlı otomasyon sistemleri üzerine odaklanıyor.")
@@ -137,10 +132,11 @@ with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
 
 st.divider()
 
-# --- 6. MÜZİK VE HOBİLER ---
+# --- MÜZİK VE HOBİLER ---
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 
+# Otomatik bulma fonksiyonu
 current_dir = os.path.dirname(os.path.abspath(__file__))
 found = False
 for root, dirs, files in os.walk(current_dir):
