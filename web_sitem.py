@@ -1,103 +1,56 @@
 import streamlit as st
 from PIL import Image
-import streamlit.components.v1 as components
 
 # Sayfa Yapılandırması
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CANLI MAVİ YILDIRIM EFEKTİ (JS) ---
-lightning_js = """
-<div id="lightning-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none;">
-    <canvas id="canvas"></canvas>
-</div>
-<script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-let width, height;
-let lightning = [];
-
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-class Lightning {
-    constructor() { this.reset(); }
-    reset() {
-        this.x = Math.random() * width;
-        this.y = 0;
-        this.segments = [];
-        this.life = 25; 
-        this.opacity = 1;
-        this.createPath();
-    }
-    createPath() {
-        let currX = this.x;
-        let currY = this.y;
-        while (currY < height) {
-            let nextX = currX + (Math.random() * 120 - 60);
-            let nextY = currY + (Math.random() * 40 + 20);
-            this.segments.push({x1: currX, y1: currY, x2: nextX, y2: nextY});
-            currX = nextX;
-            currY = nextY;
-        }
-    }
-    draw() {
-        if (this.life <= 0) return;
-        
-        // Dış Parlama (Mavi Glow)
-        ctx.strokeStyle = `rgba(0, 191, 255, ${this.opacity * 0.5})`;
-        ctx.lineWidth = 5;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = '#00bfff';
-        
-        ctx.beginPath();
-        for (let s of this.segments) {
-            ctx.moveTo(s.x1, s.y1);
-            ctx.lineTo(s.x2, s.y2);
-        }
-        ctx.stroke();
-
-        // İç Çizgi (Beyaz/Açık Mavi Merkez)
-        ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        this.life--;
-        this.opacity -= 0.04;
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    if (Math.random() < 0.09) { // Çakma sıklığı artırıldı
-        lightning.push(new Lightning());
-    }
-    lightning.forEach((l, i) => {
-        l.draw();
-        if (l.life <= 0) lightning.splice(i, 1);
-    });
-    requestAnimationFrame(animate);
-}
-animate();
-</script>
-<style>
-    #canvas { width: 100%; height: 100%; }
-</style>
-"""
-
-# Efekti en üste ekle
-components.html(lightning_js, height=0)
-
-# --- TASARIM VE EFEKTLER (CSS) ---
+# --- GARANTİLENMİŞ CSS YILDIRIM EFEKTİ ---
 st.markdown("""
     <style>
-    [data-testid="stSidebar"] { display: none; }
-    .stApp { background-color: #ffffff; }
-    h1, h2, h3, h4, p, li, span, label, div { color: #1a1a1a !important; }
+    /* 1. Tüm ekranı kaplayan çakma efekti */
+    @keyframes lightning-flash {
+        0% { background-color: transparent; }
+        1% { background-color: rgba(0, 150, 255, 0.15); }
+        2% { background-color: transparent; }
+        3% { background-color: rgba(255, 255, 255, 0.2); }
+        4% { background-color: transparent; }
+    }
 
+    /* 2. Dikey yıldırım çizgisi animasyonu */
+    @keyframes bolt {
+        0% { opacity: 0; transform: scaleY(0); }
+        1% { opacity: 1; transform: scaleY(1); }
+        2% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .stApp {
+        background-color: #ffffff;
+        animation: lightning-flash 6s infinite; /* Her 6 saniyede bir ekran parlar */
+    }
+
+    /* Yıldırım Çizgisi */
+    .bolt-container {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100vh;
+        background: linear-gradient(to bottom, transparent, #00bfff, #ffffff, transparent);
+        box-shadow: 0 0 20px #00bfff;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        animation: bolt 6s infinite;
+    }
+
+    /* Farklı konumlarda ek yıldırım çizgileri */
+    .bolt-2 { left: 20%; animation-delay: 2s; width: 1px; }
+    .bolt-3 { left: 80%; animation-delay: 4s; width: 1px; }
+
+    /* Mevcut tasarım kodların */
+    [data-testid="stSidebar"] { display: none; }
+    h1, h2, h3, h4, p, li, span, label, div { color: #1a1a1a !important; }
     .info-box {
         background-color: rgba(248, 249, 250, 0.9);
         padding: 20px;
@@ -115,17 +68,19 @@ st.markdown("""
         position: fixed;
         font-size: 40px;
         animation: float 5s ease-in-out infinite;
-        z-index: 1; /* Yıldırım bunun üstünde kalacak */
+        z-index: 1;
         pointer-events: none;
     }
     </style>
+
+    <div class="bolt-container"></div>
+    <div class="bolt-container bolt-2"></div>
+    <div class="bolt-container bolt-3"></div>
     
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
     <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
     <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
     <div class="floating-icon" style="top: 80%; right: 5%;">🔧</div>
-    <div class="floating-icon" style="top: 40%; left: 80%;">🔌</div>
-    <div class="floating-icon" style="top: 50%; right: 50%;">⚙️</div>
     """, unsafe_allow_html=True)
 
 # --- İÇERİK ---
@@ -141,7 +96,6 @@ with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ, Kapaklı | 🎂 20 Yaşında")
-    st.write("🎓 Elektrik-Elektronik Mezunu")
     st.write("Python dünyasında kendimi geliştiriyor ve dijital çözümler üretiyorum.")
 
 st.divider()
@@ -160,4 +114,3 @@ with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
 
 st.divider()
 st.caption("© 2026 Mehmet Utku Çimen - Tüm Hakları Saklıdır.")
-
