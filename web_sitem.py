@@ -3,7 +3,7 @@ from PIL import Image
 import os
 import base64
 
-# Sayfa Yapılandırması
+# 1. SAYFA YAPILANDIRMASI
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
 # --- ZİYARETÇİ SAYACI FONKSİYONLARI ---
@@ -14,7 +14,10 @@ def get_visitor_count():
         with open(counter_file, "w") as f:
             f.write("0")
     with open(counter_file, "r") as f:
-        return int(f.read())
+        try:
+            return int(f.read())
+        except:
+            return 0
 
 def update_visitor_count():
     count = get_visitor_count()
@@ -23,13 +26,19 @@ def update_visitor_count():
         f.write(str(new_count))
     return new_count
 
-# --- YEREL GIF DOSYASINI OKUMA FONKSİYONU ---
+# Sayacı Yönet: Eğer bu oturumda daha önce sayılmadıysa artır
+if 'is_counted' not in st.session_state:
+    v_count = update_visitor_count()
+    st.session_state['is_counted'] = True
+else:
+    v_count = get_visitor_count()
+
+# --- YEREL GIF OKUMA ---
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-# Not: 'arkaplan.gif' dosyasının kodla aynı klasörde olduğundan emin ol.
 try:
     bin_str = get_base64_of_bin_file('arkaplan.gif')
     background_css = f"url(data:image/gif;base64,{bin_str})"
@@ -91,11 +100,9 @@ st.markdown(f"""
     <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
     <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
     <div class="floating-icon" style="top: 80%; right: 5%;">🔧</div>
-    <div class="floating-icon" style="top: 40%; left: 80%;">🔌</div>
-    <div class="floating-icon" style="top: 50%; right: 50%;">⚙️</div>
     """, unsafe_allow_html=True)
 
-# --- İÇERİK BÖLÜMLERİ ---
+# --- ÜST BÖLÜM: PROFİL ---
 col1, col2 = st.columns([1, 3])
 
 with col1:
@@ -111,11 +118,12 @@ with col2:
     st.write("📍 Tekirdağ | 🎂 20 Yaşında")
     st.write("🎓 Elektrik-Elektronik Mezunu")
     st.write("Merhaba! Ben Utku. Elektrik-elektronik uzmanlığımı Python ile birleştiriyorum.")
-    st.write("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
-    st.write("(MEVLANA)")
+    st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)*")     
+    st.write("**(MEVLANA)**")
 
 st.divider()
 
+# --- ORTA BÖLÜM: BİLGİLER ---
 c1, c2 = st.columns(2)
 with c1:
     st.markdown("""<div class="info-box"><h3>🛠️ Uzmanlık Alanları</h3>
@@ -126,15 +134,17 @@ with c2:
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
     <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#ffff00;">Utku Çimen</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
+# --- PROJELER ---
 st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
 st.divider()
 
+# --- MÜZİK ---
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 
@@ -151,29 +161,13 @@ for root, dirs, files in os.walk(current_dir):
 if not found:
     st.error("❌ 'sarki.mp3' bulunamadı.")
 
+# --- ALT BÖLÜM: HOBİLER VE SAYAÇ ---
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
-# --- ZİYARETÇİ SAYACI GÖSTERİMİ ---
 st.divider()
-if 'visited' not in st.session_state:
-    st.session_state['visited'] = True
-    v_count = update_visitor_count()
-else:
-    v_count = get_visitor_count()
 
-st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+# Sayaç Gösterimi
+st.metric(label="👤 Profil Ziyaret Sayısı", value=v_count)
 
 st.caption("© 2026 Mehmet Utku Çimen")
-
-
-
-
-
-
-
-
-
-
-
-
