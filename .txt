@@ -1,0 +1,40 @@
+import streamlit as st
+import os
+
+# Sayacın kaydedileceği dosya yolu
+counter_file = "ziyaretci_sayisi.txt"
+
+def get_visitor_count():
+    # Dosya yoksa oluştur ve 0 yaz
+    if not os.path.exists(counter_file):
+        with open(counter_file, "w") as f:
+            f.write("0")
+    
+    # Mevcut sayıyı oku
+    with open(counter_file, "r") as f:
+        count = int(f.read())
+    return count
+
+def update_visitor_count(count):
+    # Sayıyı bir artır ve dosyaya yaz
+    new_count = count + 1
+    with open(counter_file, "w") as f:
+        f.write(str(new_count))
+    return new_count
+
+# --- Streamlit Arayüzü ---
+st.title("Ziyaretçi Takip Paneli")
+
+# Sayacı al ve güncelle
+current_count = get_visitor_count()
+
+# Streamlit her etkileşimde (buton tıklama vb.) sayfayı yenilediği için 
+# sadece "oturum" bazlı sayma yapmak istersen session_state kullanabilirsin
+if 'visited' not in st.session_state:
+    st.session_state['visited'] = True
+    current_count = update_visitor_count(current_count)
+
+# Sayacı ekranda göster
+st.metric(label="Toplam Ziyaretçi Sayısı", value=current_count)
+
+st.write("Bu uygulama her yeni kullanıcı girişinde sayacı otomatik olarak artırır.")
