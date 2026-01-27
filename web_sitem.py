@@ -6,6 +6,23 @@ import base64
 # Sayfa Yapılandırması
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
+# --- ZİYARETÇİ SAYACI FONKSİYONLARI ---
+counter_file = "ziyaretci_sayisi.txt"
+
+def get_visitor_count():
+    if not os.path.exists(counter_file):
+        with open(counter_file, "w") as f:
+            f.write("0")
+    with open(counter_file, "r") as f:
+        return int(f.read())
+
+def update_visitor_count():
+    count = get_visitor_count()
+    new_count = count + 1
+    with open(counter_file, "w") as f:
+        f.write(str(new_count))
+    return new_count
+
 # --- YEREL GIF DOSYASINI OKUMA FONKSİYONU ---
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -17,47 +34,36 @@ try:
     bin_str = get_base64_of_bin_file('arkaplan.gif')
     background_css = f"url(data:image/gif;base64,{bin_str})"
 except FileNotFoundError:
-    # Dosya yoksa siyah arka plan kullan (hata vermemesi için)
     background_css = "none"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
     <style>
-    /* Sol menüyü tamamen gizle */
-    [data-testid="stSidebar"] {{
-        display: none;
-    }}
+    [data-testid="stSidebar"] {{ display: none; }}
     
-    /* GIF Arka Plan ve Parlama Önleyici Filtre */
     .stApp {{
         background-image: {background_css};
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-color: #000000; /* GIF yüklenene kadar siyah kalsın */
+        background-color: #000000;
     }}
 
-    /* BEYAZ PARLAMAYI (FLASH) EMEN KATMAN */
     .stApp::before {{
         content: "";
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         backdrop-filter: brightness(0.6);
         z-index: -1;
     }}
 
-    /* Yazı renkleri ve okunabilirlik */
     h1, h2, h3, h4, p, li, span, label, div {{
         color: #ffffff !important;
         text-shadow: 2px 2px 4px #000000;
     }}
 
-    /* Kart tasarımı */
     .info-box {{
         background-color: rgba(0, 0, 0, 0.7);
         padding: 20px;
@@ -67,7 +73,6 @@ st.markdown(f"""
         backdrop-filter: blur(10px);
     }}
 
-    /* Havada uçuşan ikonlar animasyonu */
     @keyframes float {{
         0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
         50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.5; }}
@@ -90,7 +95,7 @@ st.markdown(f"""
     <div class="floating-icon" style="top: 50%; right: 50%;">⚙️</div>
     """, unsafe_allow_html=True)
 
-# --- İÇERİK BÖLÜMLERİ (Aynen Korundu) ---
+# --- İÇERİK BÖLÜMLERİ ---
 col1, col2 = st.columns([1, 3])
 
 with col1:
@@ -148,7 +153,19 @@ if not found:
 
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
+
+# --- ZİYARETÇİ SAYACI GÖSTERİMİ ---
+st.divider()
+if 'visited' not in st.session_state:
+    st.session_state['visited'] = True
+    v_count = update_visitor_count()
+else:
+    v_count = get_visitor_count()
+
+st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
 
 
