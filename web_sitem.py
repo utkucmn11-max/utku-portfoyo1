@@ -110,7 +110,7 @@ with col2:
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ | 🎂 20 Yaşında")
     st.write("🎓 Elektrik-Elektronik Mezunu")
-    st.write(" Merhaba! Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
+    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum. 
     Teknolojiye olan tutkumla beraber Python dünyasında kendimi geliştiriyor ve dijital çözümler üretiyorum.")
     st.write("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
     st.write("(MEVLANA)")
@@ -166,4 +166,5 @@ else:
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
 
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
