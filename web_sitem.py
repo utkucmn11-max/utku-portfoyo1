@@ -125,7 +125,7 @@ with c1:
 
 with c2:
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
-    <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
+    <p>📧 <b>E-posta:</b> utkucmn11[at]gmail.com</p>
     <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
     <p>💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/" style="color:#ffff00;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
@@ -166,6 +166,7 @@ else:
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
 
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
 
 
