@@ -3,7 +3,7 @@ from PIL import Image
 import os
 import base64
 
-# Sayfa Yapılandırması
+# --- SAYFA YAPILANDIRMASI ---
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
 # --- ZİYARETÇİ SAYACI FONKSİYONLARI ---
@@ -11,39 +11,30 @@ counter_file = "ziyaretci_sayisi.txt"
 
 def get_visitor_count():
     if not os.path.exists(counter_file):
-        with open(counter_file, "w") as f:
-            f.write("0")
-    with open(counter_file, "r") as f:
-        return int(f.read())
+        with open(counter_file, "w") as f: f.write("0")
+    with open(counter_file, "r") as f: return int(f.read())
 
 def update_visitor_count():
     count = get_visitor_count()
     new_count = count + 1
-    with open(counter_file, "w") as f:
-        f.write(str(new_count))
+    with open(counter_file, "w") as f: f.write(str(new_count))
     return new_count
 
-# --- YEREL GIF DOSYASINI OKUMA FONKSİYONU ---
+# --- ARKA PLAN GIF OKUMA ---
 def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+    try:
+        with open(bin_file, 'rb') as f: data = f.read()
+        return base64.b64encode(data).decode()
+    except: return None
 
-# --- HATA DÜZELTİLEN BÖLÜM (39. SATIR CİVARI) ---
-try:
-    if os.path.exists('arkaplan.gif'):
-        bin_str = get_base64_of_bin_file('arkaplan.gif')
-        background_css = f"url(data:image/gif;base64,{bin_str})"
-    else:
-        background_css = "none"
-except Exception:
-    background_css = "none"
+# Hata kontrolü eklenmiş arka plan bölümü
+bin_str = get_base64_of_bin_file('arkaplan.gif')
+background_css = f"url(data:image/gif;base64,{bin_str})" if bin_str else "none"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
     <style>
     [data-testid="stSidebar"] {{ display: none; }}
-    
     .stApp {{
         background-image: {background_css};
         background-size: cover;
@@ -52,139 +43,69 @@ st.markdown(f"""
         background-attachment: fixed;
         background-color: #000000;
     }}
-
     .stApp::before {{
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        backdrop-filter: brightness(0.6);
-        z-index: -1;
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); backdrop-filter: brightness(0.6); z-index: -1;
     }}
-
     h1, h2, h3, h4, p, li, span, label, div {{
         color: #ffffff !important;
         text-shadow: 2px 2px 4px #000000;
     }}
-
     .info-box {{
         background-color: rgba(0, 0, 0, 0.7);
-        padding: 20px;
-        border-radius: 15px;
+        padding: 20px; border-radius: 15px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        margin-bottom: 20px;
-        backdrop-filter: blur(10px);
+        margin-bottom: 20px; backdrop-filter: blur(10px);
     }}
-
     .sensor-card {{
         background: rgba(0,0,0,0.8);
-        padding: 15px;
-        border: 1px solid #ffff00;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
+        padding: 15px; border: 1px solid #ffff00;
+        border-radius: 10px; box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.3);
     }}
     .sensor-text {{
-        color: #ffff00 !important;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px #000000;
-        font-size: 1.1em;
+        color: #ffff00 !important; font-weight: bold;
+        text-shadow: 1px 1px 2px #000000; font-size: 1.1em;
     }}
-
     @keyframes float {{
         0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
         50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.5; }}
         100% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
     }}
     .floating-icon {{
-        position: fixed;
-        font-size: 40px;
+        position: fixed; font-size: 40px;
         animation: float 5s ease-in-out infinite;
-        z-index: 0;
-        pointer-events: none;
+        z-index: 0; pointer-events: none;
     }}
     </style>
-    
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
     <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
     <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
     """, unsafe_allow_html=True)
 
-# --- İÇERİK BÖLÜMLERİ ---
+# --- ÜST BÖLÜM (PROFİL) ---
 col1, col2 = st.columns([1, 3])
-
 with col1:
     try:
-        img = Image.open("profil.jpg")
-        st.image(img, width=300)
+        st.image("profil.jpg", width=300)
     except:
-        st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
+        st.info("📸 profil.jpg bulunamadı.")
 
 with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
-    st.write("📍 Tekirdağ | 🎂 20 Yaşında")
-    st.write("🎓 Elektrik-Elektronik Mezunu")
-    st.write("""Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum.""")
-    st.write("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
-    st.write("(MEVLANA)")
+    st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
+    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum.")
+    st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)* - **MEVLANA**")
 
 st.divider()
 
+# --- UZMANLIK VE İLETİŞİM ---
 c1, c2 = st.columns(2)
 with c1:
     st.markdown("""<div class="info-box"><h3>🛠️ Uzmanlık Alanları</h3>
     <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
     <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
-
 with c2:
-    linkedin_link = "https://www.linkedin.com/in/utkucimen" 
+    linkedin_url = "https://www.linkedin.com/in/utkucimen" # Burayı güncelleyebilirsin
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
-    <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_link}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen Profili</a></p>
-    </div>""", unsafe_allow_html=True)
-
-# --- TEKNİK REHBER ---
-st.header("📡 Teknik Rehber")
-t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "⚡ Ohm Yasası"])
-
-with t1:
-    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
-
-with t2:
-    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
-
-with t3:
-    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
-
-with t4:
-    v_ohm = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc")
-    r_ohm = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
-    if r_ohm > 0:
-        st.markdown(f'<p class="sensor-text">Akım: {v_ohm/r_ohm:.2f} A</p>', unsafe_allow_html=True)
-
-st.header("💻 Projelerim")
-with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
-    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
-
-st.divider()
-
-st.write("### 🎵 Favori Parçam")
-st.write("(AC-DC) BACK-İN-BLACK ")
-
-if os.path.exists("sarki.mp3"):
-    with open("sarki.mp3", "rb") as f:
-        st.audio(f.read(), format="audio/mp3")
-else:
-    st.error("❌ 'sarki.mp3' bulunamadı.")
-
-# --- ZİYARETÇİ SAYACI ---
-st.divider()
-if 'visited' not in st.session_state:
-    st.session_state['visited'] = True
-    v_count = update_visitor_count()
-else:
-    v_count = get_visitor_count()
-
-st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
-st.caption("© 2026 Mehmet Utku Çimen")
+    <p>📧
