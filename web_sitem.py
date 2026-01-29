@@ -139,4 +139,31 @@ with t3:
 
 with t4:
     st.write("### 📐 Ohm Yasası Hesaplayıcı (V = I x R)")
-    calc1, calc2 = st.
+    calc1, calc2 = st.columns(2)
+    with calc1:
+        v_in = st.number_input("Gerilim (Volt)", value=220.0)
+        r_in = st.number_input("Direnç (Ohm)", value=10.0)
+        if r_in > 0:
+            st.markdown(f'<p class="sensor-text">Sonuç: {v_in/r_in:.2f} Amper</p>', unsafe_allow_html=True)
+    with calc2:
+        st.markdown('<div class="info-box">Direnç arttıkça akım düşer, gerilim arttıkça akım artar.</div>', unsafe_allow_html=True)
+
+# --- ALT BÖLÜM ---
+st.divider()
+st.header("💻 Projelerim")
+with st.expander("🚀 Çalışmalarım", expanded=True):
+    st.write("Python otomasyon projelerim devam ediyor.")
+
+st.write("### 🎵 Favori Parçam: AC-DC - BACK-IN-BLACK")
+if os.path.exists("sarki.mp3"):
+    with open("sarki.mp3", "rb") as f:
+        st.audio(f.read(), format="audio/mp3")
+else:
+    st.error("❌ sarki.mp3 bulunamadı.")
+
+# --- ZİYARETÇİ SAYACI ---
+st.divider()
+v_count = update_visitor_count() if 'visited' not in st.session_state else get_visitor_count()
+st.session_state['visited'] = True
+st.metric(label="👤 Toplam Ziyaret", value=v_count)
+st.caption("© 2026 Mehmet Utku Çimen")
