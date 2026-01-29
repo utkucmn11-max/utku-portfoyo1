@@ -113,7 +113,7 @@ with c2:
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 utkucmn11@gmail.com</p>
     <p>📸 <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 LinkedIn: Utku Çimen</p></div>""", unsafe_allow_html=True)
+    <p>💼 LinkedIn:https://www.linkledin.com/UtkuÇimen_/" Utku Çimen</p></div>""", unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
 st.header("📡 Teknik Rehber")
@@ -167,3 +167,4 @@ v_count = update_visitor_count() if 'visited' not in st.session_state else get_v
 st.session_state['visited'] = True
 st.metric(label="👤 Toplam Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
+
