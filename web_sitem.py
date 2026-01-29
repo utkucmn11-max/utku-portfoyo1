@@ -117,4 +117,74 @@ with col1:
         img = Image.open("profil.jpg")
         st.image(img, width=300)
     except:
-        st.info("
+        st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
+
+with col2:
+    st.title("Mehmet Utku Çimen")
+    st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
+    st.write("📍 Tekirdağ | 🎂 20 Yaşında")
+    st.write("🎓 Elektrik-Elektronik Mezunu")
+    st.write("""Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak bu sektörde çalışıyorum.""")
+    st.write("(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)")     
+    st.write("(MEVLANA)")
+
+st.divider()
+
+c1, c2 = st.columns(2)
+with c1:
+    st.markdown("""<div class="info-box"><h3>🛠️ Uzmanlık Alanları</h3>
+    <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
+    <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
+
+with c2:
+    linkedin_link = "https://www.linkedin.com/in/utkucimen" 
+    st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
+    <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
+    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_link}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen Profili</a></p>
+    </div>""", unsafe_allow_html=True)
+
+# --- TEKNİK REHBER ---
+st.header("📡 Teknik Rehber")
+t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "⚡ Ohm Yasası"])
+
+with t1:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+
+with t2:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+
+with t3:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
+
+with t4:
+    v_ohm = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc")
+    r_ohm = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
+    if r_ohm > 0:
+        st.markdown(f'<p class="sensor-text">Akım: {v_ohm/r_ohm:.2f} A</p>', unsafe_allow_html=True)
+
+st.header("💻 Projelerim")
+with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
+
+st.divider()
+
+st.write("### 🎵 Favori Parçam")
+st.write("(AC-DC) BACK-İN-BLACK ")
+
+if os.path.exists("sarki.mp3"):
+    with open("sarki.mp3", "rb") as f:
+        st.audio(f.read(), format="audio/mp3")
+else:
+    st.error("❌ 'sarki.mp3' bulunamadı.")
+
+# --- ZİYARETÇİ SAYACI ---
+st.divider()
+if 'visited' not in st.session_state:
+    st.session_state['visited'] = True
+    v_count = update_visitor_count()
+else:
+    v_count = get_visitor_count()
+
+st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+st.caption("© 2026 Mehmet Utku Çimen")
