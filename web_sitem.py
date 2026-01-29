@@ -23,11 +23,12 @@ def update_visitor_count():
 # --- ARKA PLAN GIF OKUMA ---
 def get_base64_of_bin_file(bin_file):
     try:
-        with open(bin_file, 'rb') as f: data = f.read()
-        return base64.b64encode(data).decode()
+        if os.path.exists(bin_file):
+            with open(bin_file, 'rb') as f: data = f.read()
+            return base64.b64encode(data).decode()
     except: return None
+    return None
 
-# Hata kontrolü eklenmiş arka plan bölümü
 bin_str = get_base64_of_bin_file('arkaplan.gif')
 background_css = f"url(data:image/gif;base64,{bin_str})" if bin_str else "none"
 
@@ -106,6 +107,67 @@ with c1:
     <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
     <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 with c2:
-    linkedin_url = "https://www.linkedin.com/in/utkucimen" # Burayı güncelleyebilirsin
+    linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
-    <p>📧
+    <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
+    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen Profili</a></p>
+    </div>""", unsafe_allow_html=True)
+
+# --- TEKNİK REHBER (SENSÖR VE OHM) ---
+st.header("📡 Teknik Rehber")
+t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "⚡ Ohm Yasası"])
+
+with t1:
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 🧲 İndüktif\nSadece metal algılar.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V DC<br>🔵 Mavi: 0V (GND)<br>⚫ Siyah: Sinyal (NO)</span></div>""", unsafe_allow_html=True)
+
+with t2:
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 🔮 Kapasitif\nHer nesneyi algılar.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V DC<br>🔵 Mavi: 0V (GND)<br>⚫ Siyah: Sinyal (NO)</span></div>""", unsafe_allow_html=True)
+
+with t3:
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 👁️ Optik\nIşık kesilmesiyle çalışır.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V DC<br>🔵 Mavi: 0V (GND)<br>⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
+
+with t4:
+    st.write("### 📐 Ohm Yasası Hesaplayıcı")
+    calc1, calc2 = st.columns(2)
+    with calc1:
+        v_in = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc_final")
+        r_in = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc_final")
+        if r_in > 0:
+            st.markdown(f'<p class="sensor-text">Akım Sonucu: {v_in/r_in:.2f} Amper</p>', unsafe_allow_html=True)
+    with calc2:
+        st.markdown('<div class="info-box">Formül: V = I × R</div>', unsafe_allow_html=True)
+
+# --- ALT BÖLÜM ---
+st.header("💻 Projelerim")
+with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
+
+st.divider()
+
+st.write("### 🎵 Favori Parçam: AC-DC - BACK-IN-BLACK")
+if os.path.exists("sarki.mp3"):
+    with open("sarki.mp3", "rb") as f:
+        st.audio(f.read(), format="audio/mp3")
+else:
+    st.error("❌ 'sarki.mp3' bulunamadı.")
+
+# --- ZİYARETÇİ SAYACI ---
+st.divider()
+if 'visited' not in st.session_state:
+    st.session_state['visited'] = True
+    v_count = update_visitor_count()
+else:
+    v_count = get_visitor_count()
+
+st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+st.caption("© 2026 Mehmet Utku Çimen")
