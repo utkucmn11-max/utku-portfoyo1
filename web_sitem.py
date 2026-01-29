@@ -61,7 +61,6 @@ st.markdown(f"""
         margin-bottom: 20px; backdrop-filter: blur(10px);
     }}
 
-    /* SENSÖR KARTI VE SARI YAZI STİLLERİ */
     .sensor-card {{
         background: rgba(0,0,0,0.8);
         padding: 15px;
@@ -104,8 +103,7 @@ with col1:
 with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
-    st.write("📍 Tekirdağ | 🎂 20 Yaşında")
-    st.write("🎓 Elektrik-Elektronik Mezunu")
+    st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
     st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum. Python dünyasında kendimi geliştiriyorum.")
     st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)*")     
     st.write("**(MEVLANA)**")
@@ -120,45 +118,47 @@ with c1:
     <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 
 with c2:
-    # LinkedIn linkini buraya yapıştır
-    linkedin_link = "https://www.linkedin.com/in/utkucimen" 
+    # LinkedIn linkini buraya ekle Utku
+    linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
     <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_link}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
-# --- TEKNİK REHBER (SENSÖR BÖLÜMÜ) ---
-st.header("📡 Teknik Rehber: Sensör Renk Kodları")
-t1, t2, t3 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik"])
+# --- TEKNİK REHBER ---
+st.header("📡 Teknik Rehber")
+t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
 
 with t1:
     col_a, col_b = st.columns([1, 2])
     with col_a: st.write("### 🧲 İndüktif\nSadece metal algılar.")
     with col_b:
-        st.markdown("""<div class="sensor-card">
-        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
-        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
-        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
 
 with t2:
     col_a, col_b = st.columns([1, 2])
     with col_a: st.write("### 🔮 Kapasitif\nHer türlü nesneyi algılar.")
     with col_b:
-        st.markdown("""<div class="sensor-card">
-        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
-        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
-        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
 
 with t3:
     col_a, col_b = st.columns([1, 2])
-    with col_a: st.write("### 👁️ Optik / Fotosel\nIşık kesilmesiyle çalışır.")
+    with col_a: st.write("### 👁️ Optik\nIşık kesilmesiyle çalışır.")
     with col_b:
-        st.markdown("""<div class="sensor-card">
-        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
-        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
-        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span><br>
-        <span class="sensor-text">⚪ Beyaz: Sinyal (NC)</span></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
+
+with t4:
+    st.write("### 📐 Ohm Yasası Hesaplayıcı")
+    calc_col1, calc_col2 = st.columns(2)
+    with calc_col1:
+        v_input = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc")
+        r_input = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
+        if r_input > 0:
+            i_result = v_input / r_input
+            st.markdown(f"""<div class="sensor-card"><span class="sensor-text">Hesaplanan Akım: {i_result:.2f} Amper</span></div>""", unsafe_allow_html=True)
+    with calc_col2:
+        st.markdown("""<div class="info-box"><b>Formül: V = I × R</b><br>Gerilimi direnç değerine bölerek akımı bulabilirsiniz.</div>""", unsafe_allow_html=True)
 
 # --- PROJELER ---
 st.divider()
