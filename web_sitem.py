@@ -29,10 +29,14 @@ def get_base64_of_bin_file(bin_file):
         data = f.read()
     return base64.b64encode(data).decode()
 
+# --- HATA DÜZELTİLEN BÖLÜM (39. SATIR CİVARI) ---
 try:
-    bin_str = get_base64_of_bin_file('arkaplan.gif')
-    background_css = f"url(data:image/gif;base64,{bin_str})"
-except FileNotFoundError:
+    if os.path.exists('arkaplan.gif'):
+        bin_str = get_base64_of_bin_file('arkaplan.gif')
+        background_css = f"url(data:image/gif;base64,{bin_str})"
+    else:
+        background_css = "none"
+except Exception:
     background_css = "none"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
@@ -99,3 +103,18 @@ st.markdown(f"""
         pointer-events: none;
     }}
     </style>
+    
+    <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
+    <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
+    <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
+    """, unsafe_allow_html=True)
+
+# --- İÇERİK BÖLÜMLERİ ---
+col1, col2 = st.columns([1, 3])
+
+with col1:
+    try:
+        img = Image.open("profil.jpg")
+        st.image(img, width=300)
+    except:
+        st.info("
