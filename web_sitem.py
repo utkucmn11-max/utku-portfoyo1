@@ -103,18 +103,35 @@ with c2:
 # --- SENSÖR REHBERİ (YENİ EKLEDİĞİMİZ BÖLÜM) ---
 st.header("📡 Teknik Rehber: Sensör Renk Kodları")
 st.write("Endüstriyel sensörlerin standart bağlantı şemaları ve çalışma prensipleri.")
+# --- CSS Kısmına Eklenecek/Güncellenecek Alan ---
+st.markdown("""
+    <style>
+    .sensor-card {
+        background: rgba(0,0,0,0.6);
+        padding: 15px;
+        border: 1px solid #ffff00; /* Sarı çerçeve */
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2); /* Hafif sarı parlama */
+    }
+    .sensor-text {
+        color: #ffff00 !important; /* Yazıları sarı yapar */
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #000000;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-
-
-t1, t2, t3 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik / Fotosel"])
-
+# --- Sensör Bölümü İçeriği ---
 with t1:
     col_img, col_txt = st.columns([1, 2])
     with col_img:
         st.markdown("### 🧲 İndüktif\n*Sadece metal algılar.*")
     with col_txt:
         st.markdown("""<div class="sensor-card">
-        🟤 <b>Kahve:</b> +24V DC<br>🔵 <b>Mavi:</b> 0V (GND)<br>⚫ <b>Siyah:</b> Sinyal (NO)</div>""", unsafe_allow_html=True)
+        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
+        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
+        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span>
+        </div>""", unsafe_allow_html=True)
 
 with t2:
     col_img, col_txt = st.columns([1, 2])
@@ -122,7 +139,10 @@ with t2:
         st.markdown("### 🔮 Kapasitif\n*Yoğunluk farkını algılar.*")
     with col_txt:
         st.markdown("""<div class="sensor-card">
-        🟤 <b>Kahve:</b> +24V DC<br>🔵 <b>Mavi:</b> 0V (GND)<br>⚫ <b>Siyah:</b> Sinyal (NO)</div>""", unsafe_allow_html=True)
+        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
+        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
+        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span>
+        </div>""", unsafe_allow_html=True)
 
 with t3:
     col_img, col_txt = st.columns([1, 2])
@@ -130,7 +150,14 @@ with t3:
         st.markdown("### 👁️ Optik\n*Işık yansımasıyla çalışır.*")
     with col_txt:
         st.markdown("""<div class="sensor-card">
-        🟤 <b>Kahve:</b> +24V DC<br>🔵 <b>Mavi:</b> 0V (GND)<br>⚫ <b>Siyah:</b> Sinyal (NO)<br>⚪ <b>Beyaz:</b> Sinyal (NC)</div>""", unsafe_allow_html=True)
+        <span class="sensor-text">🟤 Kahve: +24V DC</span><br>
+        <span class="sensor-text">🔵 Mavi: 0V (GND)</span><br>
+        <span class="sensor-text">⚫ Siyah: Sinyal (NO)</span><br>
+        <span class="sensor-text">⚪ Beyaz: Sinyal (NC)</span>
+        </div>""", unsafe_allow_html=True)
+
+
+
 
 # --- PROJELER VE HOBİLER ---
 st.divider()
@@ -151,6 +178,7 @@ st.session_state['visited'] = True
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
 
 st.caption("© 2026 Mehmet Utku Çimen")
+
 
 
 
