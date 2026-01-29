@@ -11,29 +11,24 @@ counter_file = "ziyaretci_sayisi.txt"
 
 def get_visitor_count():
     if not os.path.exists(counter_file):
-        with open(counter_file, "w") as f:
-            with open(counter_file, "w") as f: f.write("0")
-    with open(counter_file, "r") as f:
-        return int(f.read())
+        with open(counter_file, "w") as f: f.write("0")
+    with open(counter_file, "r") as f: return int(f.read())
 
 def update_visitor_count():
     count = get_visitor_count()
     new_count = count + 1
-    with open(counter_file, "w") as f:
-        f.write(str(new_count))
+    with open(counter_file, "w") as f: f.write(str(new_count))
     return new_count
 
 # --- ARKA PLAN GIF OKUMA ---
 def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+    try:
+        with open(bin_file, 'rb') as f: data = f.read()
+        return base64.b64encode(data).decode()
+    except: return None
 
-try:
-    bin_str = get_base64_of_bin_file('arkaplan.gif')
-    background_css = f"url(data:image/gif;base64,{bin_str})"
-except:
-    background_css = "none"
+bin_str = get_base64_of_bin_file('arkaplan.gif')
+background_css = f"url(data:image/gif;base64,{bin_str})" if bin_str else "none"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
@@ -64,7 +59,7 @@ st.markdown(f"""
     .sensor-card {{
         background: rgba(0,0,0,0.8);
         padding: 15px; border: 1px solid #ffff00;
-        border-radius: 10px; box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
+        border-radius: 10px; box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.3);
     }}
     .sensor-text {{
         color: #ffff00 !important; font-weight: bold;
@@ -80,6 +75,8 @@ st.markdown(f"""
         animation: float 5s ease-in-out infinite;
         z-index: 0; pointer-events: none;
     }}
+    a {{ color: #ffff00 !important; text-decoration: none; font-weight: bold; }}
+    a:hover {{ text-decoration: underline; }}
     </style>
     <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
     <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
@@ -110,10 +107,16 @@ with c1:
     <ul><li>Elektrik Devre Tasarımı</li><li>Python ile Otomasyon</li>
     <li>3D Printer & Prototipleme</li><li>Bakım & Onarım</li></ul></div>""", unsafe_allow_html=True)
 with c2:
-    st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
-    <p>📧 utkucmn11@gmail.com</p>
-    <p>📸 <a href="https://www.instagram.com/59.utkucimen_/" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 LinkedIn:https://www.linkledin.com/UtkuÇimen_/" Utku Çimen</p></div>""", unsafe_allow_html=True)
+    # BURAYI DÜZELTTİM: LinkedIn linkini aşağıya yapıştır Utku
+    linkedin_url = "https://tr.linkedin.com/in/utku-%C3%A7imen-13aba1340?trk=people-guest_people_search-card" 
+    st.markdown(f"""
+    <div class="info-box">
+        <h3>📫 İletişim</h3>
+        <p>📧 <b>E-posta:</b> <a href="mailto:utkucmn11@gmail.com">utkucmn11@gmail.com</a></p>
+        <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank">@59.utkucimen_</a></p>
+        <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank">Utku Çimen Profili</a></p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
 st.header("📡 Teknik Rehber")
@@ -127,7 +130,7 @@ with t1:
 
 with t2:
     col_a, col_b = st.columns([1, 2])
-    with col_a: st.write("### 🔮 Kapasitif\nHer nesneyi algılar.")
+    with col_a: st.write("### 🔮 Kapasitif\nYoğunluk farkıyla her nesneyi algılar.")
     with col_b:
         st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V DC<br>🔵 Mavi: 0V (GND)<br>⚫ Siyah: Sinyal (NO)</span></div>""", unsafe_allow_html=True)
 
@@ -141,18 +144,18 @@ with t4:
     st.write("### 📐 Ohm Yasası Hesaplayıcı (V = I x R)")
     calc1, calc2 = st.columns(2)
     with calc1:
-        v_in = st.number_input("Gerilim (Volt)", value=220.0)
-        r_in = st.number_input("Direnç (Ohm)", value=10.0)
+        v_in = st.number_input("Gerilim (Volt)", value=220.0, key="ohm_v")
+        r_in = st.number_input("Direnç (Ohm)", value=10.0, key="ohm_r")
         if r_in > 0:
             st.markdown(f'<p class="sensor-text">Sonuç: {v_in/r_in:.2f} Amper</p>', unsafe_allow_html=True)
     with calc2:
-        st.markdown('<div class="info-box">Direnç arttıkça akım düşer, gerilim arttıkça akım artar.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="info-box">Gerilim (V) = Akım (I) × Direnç (R)</div>', unsafe_allow_html=True)
 
 # --- ALT BÖLÜM ---
 st.divider()
 st.header("💻 Projelerim")
 with st.expander("🚀 Çalışmalarım", expanded=True):
-    st.write("Python otomasyon projelerim devam ediyor.")
+    st.write("Python otomasyon projelerim ve elektrik devre tasarımlarım devam ediyor.")
 
 st.write("### 🎵 Favori Parçam: AC-DC - BACK-IN-BLACK")
 if os.path.exists("sarki.mp3"):
@@ -167,4 +170,3 @@ v_count = update_visitor_count() if 'visited' not in st.session_state else get_v
 st.session_state['visited'] = True
 st.metric(label="👤 Toplam Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
-
