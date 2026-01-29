@@ -163,7 +163,7 @@ with t4:
     st.write("Gerilim, Akım ve Direnç arasındaki ilişkiyi hesaplayın: **V = I x R**")
     
 
-[Image of Ohm's Law triangle formula]
+[Image of Ohm s Law triangle formula]
 
     col_calc1, col_calc2 = st.columns(2)
     with col_calc1:
@@ -208,3 +208,4 @@ else:
 
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
+
