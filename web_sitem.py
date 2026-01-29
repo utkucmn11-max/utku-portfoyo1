@@ -114,7 +114,7 @@ with c2:
         <h3>📫 İletişim</h3>
         <p>📧 <b>E-posta:</b> <a href="mailto:utkucmn11@gmail.com">utkucmn11@gmail.com</a></p>
         <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank">@59.utkucimen_</a></p>
-        <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank">Utku Çimen Profili</a></p>
+        <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank">Utku Çimen</a></p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -170,3 +170,4 @@ v_count = update_visitor_count() if 'visited' not in st.session_state else get_v
 st.session_state['visited'] = True
 st.metric(label="👤 Toplam Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
+
