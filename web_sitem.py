@@ -1,9 +1,7 @@
 import streamlit as st
-import streamlit as st
 from PIL import Image
 import os
 import base64
-import time
 
 # --- SAYFA YAPILANDIRMASI ---
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
@@ -64,6 +62,7 @@ st.markdown(f"""
         text-shadow: 2px 2px 4px #000000;
     }}
 
+    /* KUTU NEON EFEKTİ */
     .info-box {{
         background-color: rgba(0, 0, 0, 0.7);
         padding: 20px; border-radius: 15px;
@@ -72,21 +71,19 @@ st.markdown(f"""
         transition: 0.5s ease-in-out;
     }}
 
-    /* STANDART SARI NEON */
     .neon-effect {{
         border: 2px solid #ffff00 !important;
         box-shadow: 0 0 15px #ffff00, 0 0 30px #ffff00, inset 0 0 10px #ffff00 !important;
     }}
 
-    /* PROFIL RENGARENK NEON ANIMASYONU */
+    /* PROFIL RGB NEON EFEKTİ */
     @keyframes rgb-shadow {{
-        0% {{ box-shadow: 0 0 20px #ff0000; border-color: #ff0000; }}
-        33% {{ box-shadow: 0 0 20px #00ff00; border-color: #00ff00; }}
-        66% {{ box-shadow: 0 0 20px #0000ff; border-color: #0000ff; }}
-        100% {{ box-shadow: 0 0 20px #ff0000; border-color: #ff0000; }}
+        0% {{ box-shadow: 0 0 25px #ff0000; border: 3px solid #ff0000; }}
+        33% {{ box-shadow: 0 0 25px #00ff00; border: 3px solid #00ff00; }}
+        66% {{ box-shadow: 0 0 25px #0000ff; border: 3px solid #0000ff; }}
+        100% {{ box-shadow: 0 0 25px #ff0000; border: 3px solid #ff0000; }}
     }}
 
-    /* Profil Fotoğrafı Kapsayıcısı */
     .profile-container img {{
         border-radius: 20px;
         transition: 0.5s;
@@ -94,22 +91,8 @@ st.markdown(f"""
     }}
 
     .profile-neon-active img {{
-        animation: rgb-shadow 2s linear infinite;
+        animation: rgb-shadow 3s linear infinite;
         transform: scale(1.02);
-    }}
-
-    .sensor-card {{
-        background: rgba(0,0,0,0.8);
-        padding: 15px;
-        border: 1px solid #ffff00;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
-    }}
-    .sensor-text {{
-        color: #ffff00 !important;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px #000000;
-        font-size: 1.1em;
     }}
 
     .bolt-container {{ display: flex; justify-content: center; padding: 20px; }}
@@ -136,7 +119,7 @@ st.markdown(f"""
 # --- ÜST BÖLÜM (PROFİL) ---
 col1, col2 = st.columns([1, 3])
 with col1:
-    # Profil fotoğrafını bir div içine alarak neon sınıfını uyguluyoruz
+    # Profil fotoğrafını kapsayan div
     st.markdown(f'<div class="profile-container {profile_neon}">', unsafe_allow_html=True)
     try:
         st.image("profil.jpg", width=300)
@@ -154,9 +137,11 @@ with col2:
 
 st.divider()
 
-# --- ŞİMŞEK ETKİLEŞİMİ (SÜRELİ) ---
-bolt_col1, bolt_col2 = st.columns([1, 2])
+# --- ŞİMŞEK ETKİLEŞİMİ (ZAMANLAYICI KALDIRILDI) ---
+def toggle_bolt():
+    st.session_state.bolt_on = not st.session_state.bolt_on
 
+bolt_col1, bolt_col2 = st.columns([1, 2])
 with bolt_col1:
     bolt_status_class = "bolt-on" if st.session_state.bolt_on else ""
     bolt_color = "#ffff00" if st.session_state.bolt_on else "#444"
@@ -170,15 +155,8 @@ with bolt_col1:
 
 with bolt_col2:
     st.write("### ⚡ Enerji Testi")
-    if not st.session_state.bolt_on:
-        if st.button("Sisteme Enerji Ver"):
-            st.session_state.bolt_on = True
-            st.rerun()
-    else:
-        st.button("Sistem Yüklendi! ⚡", disabled=True)
-        time.sleep(3)
-        st.session_state.bolt_on = False
-        st.rerun()
+    btn_text = "Enerjiyi Kes" if st.session_state.bolt_on else "Sisteme Enerji Ver"
+    st.button(btn_text, on_click=toggle_bolt)
 
 st.divider()
 
@@ -197,7 +175,7 @@ with c2:
     <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
-# --- TEKNİK REHBER (AYNI KALDI) ---
+# --- TEKNİK REHBER VE DİĞER BÖLÜMLER ---
 st.header("📡 Teknik Rehber")
 t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
 
@@ -205,19 +183,7 @@ with t1:
     col_a, col_b = st.columns([1, 2])
     with col_a: st.write("### 🧲 İndüktif\nSadece metal algılar.")
     with col_b:
-        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
-
-with t2:
-    col_a, col_b = st.columns([1, 2])
-    with col_a: st.write("### 🔮 Kapasitif\nHer türlü nesneyi algılar.")
-    with col_b:
-        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
-
-with t3:
-    col_a, col_b = st.columns([1, 2])
-    with col_a: st.write("### 👁️ Optik\nIşık kesilmesiyle çalışır.")
-    with col_b:
-        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="sensor-card"><span>🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
 
 with t4:
     st.write("### 📐 Ohm Yasası Hesaplayıcı")
@@ -227,27 +193,18 @@ with t4:
         r_input = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
         if r_input > 0:
             i_result = v_input / r_input
-            st.markdown(f"""<div class="sensor-card"><span class="sensor-text">Hesaplanan Akım: {i_result:.2f} Amper</span></div>""", unsafe_allow_html=True)
-    with calc_col2:
-        st.markdown("""<div class="info-box"><b>Formül: V = I × R</b><br>Gerilimi direnç değerine bölerek akımı bulabilirsiniz.</div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div style="background:rgba(0,0,0,0.8); padding:15px; border:1px solid #ffff00; border-radius:10px;"><span style="color:#ffff00; font-weight:bold;">Hesaplanan Akım: {i_result:.2f} Amper</span></div>""", unsafe_allow_html=True)
 
-# --- PROJELER ---
 st.divider()
 st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
-# --- MÜZİK VE HOBİLER ---
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 
 if os.path.exists("sarki.mp3"):
     st.audio("sarki.mp3", format="audio/mp3")
-else:
-    st.error("❌ 'sarki.mp3' bulunamadı.")
-
-st.write("### 🎮 Hobiler")
-st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 # --- ZİYARETÇİ SAYACI ---
 st.divider()
