@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import os
 import base64
+import time
 
 # --- SAYFA YAPILANDIRMASI ---
 st.set_page_config(page_title="Mehmet Utku Çimen | Portfolyo", page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
@@ -30,12 +31,13 @@ def get_base64_of_bin_file(bin_file):
 bin_str = get_base64_of_bin_file('arkaplan.gif')
 background_css = f"url(data:image/gif;base64,{bin_str})" if bin_str else "none"
 
-# --- ŞİMŞEK DURUMU KONTROLÜ (KODUN DEVAMI İÇİN GEREKLİ) ---
+# --- DURUM YÖNETİMİ ---
 if 'bolt_on' not in st.session_state:
     st.session_state.bolt_on = False
 
-# Dinamik Neon Sınıfı
+# Enerji durumuna göre neon sınıfları
 neon_class = "neon-effect" if st.session_state.bolt_on else ""
+profile_neon = "profile-neon-active" if st.session_state.bolt_on else ""
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
@@ -66,13 +68,33 @@ st.markdown(f"""
         padding: 20px; border-radius: 15px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         margin-bottom: 20px; backdrop-filter: blur(10px);
-        transition: 0.5s;
+        transition: 0.5s ease-in-out;
     }}
 
-    /* EKLEME: NEON EFEKTİ */
+    /* STANDART SARI NEON */
     .neon-effect {{
         border: 2px solid #ffff00 !important;
-        box-shadow: 0 0 15px #ffff00, inset 0 0 10px #ffff00 !important;
+        box-shadow: 0 0 15px #ffff00, 0 0 30px #ffff00, inset 0 0 10px #ffff00 !important;
+    }}
+
+    /* PROFIL RENGARENK NEON ANIMASYONU */
+    @keyframes rgb-shadow {{
+        0% {{ box-shadow: 0 0 20px #ff0000; border-color: #ff0000; }}
+        33% {{ box-shadow: 0 0 20px #00ff00; border-color: #00ff00; }}
+        66% {{ box-shadow: 0 0 20px #0000ff; border-color: #0000ff; }}
+        100% {{ box-shadow: 0 0 20px #ff0000; border-color: #ff0000; }}
+    }}
+
+    /* Profil Fotoğrafı Kapsayıcısı */
+    .profile-container img {{
+        border-radius: 20px;
+        transition: 0.5s;
+        border: 3px solid transparent;
+    }}
+
+    .profile-neon-active img {{
+        animation: rgb-shadow 2s linear infinite;
+        transform: scale(1.02);
     }}
 
     .sensor-card {{
@@ -113,10 +135,13 @@ st.markdown(f"""
 # --- ÜST BÖLÜM (PROFİL) ---
 col1, col2 = st.columns([1, 3])
 with col1:
+    # Profil fotoğrafını bir div içine alarak neon sınıfını uyguluyoruz
+    st.markdown(f'<div class="profile-container {profile_neon}">', unsafe_allow_html=True)
     try:
         st.image("profil.jpg", width=300)
     except:
         st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
     st.title("Mehmet Utku Çimen")
@@ -128,11 +153,9 @@ with col2:
 
 st.divider()
 
-# --- ŞİMŞEK ETKİLEŞİMİ ---
-def toggle_bolt():
-    st.session_state.bolt_on = not st.session_state.bolt_on
-
+# --- ŞİMŞEK ETKİLEŞİMİ (SÜRELİ) ---
 bolt_col1, bolt_col2 = st.columns([1, 2])
+
 with bolt_col1:
     bolt_status_class = "bolt-on" if st.session_state.bolt_on else ""
     bolt_color = "#ffff00" if st.session_state.bolt_on else "#444"
@@ -143,14 +166,22 @@ with bolt_col1:
             </svg>
         </div>
     """, unsafe_allow_html=True)
+
 with bolt_col2:
     st.write("### ⚡ Enerji Testi")
-    btn_text = "Enerjiyi Kes" if st.session_state.bolt_on else "Sisteme Enerji Ver"
-    st.button(btn_text, on_click=toggle_bolt)
+    if not st.session_state.bolt_on:
+        if st.button("Sisteme Enerji Ver"):
+            st.session_state.bolt_on = True
+            st.rerun()
+    else:
+        st.button("Sistem Yüklendi! ⚡", disabled=True)
+        time.sleep(3)
+        st.session_state.bolt_on = False
+        st.rerun()
 
 st.divider()
 
-# --- UZMANLIK VE İLETİŞİM (DINAMIK NEON EKLENDI) ---
+# --- UZMANLIK VE İLETİŞİM ---
 c1, c2 = st.columns(2)
 with c1:
     st.markdown(f"""<div class="info-box {neon_class}"><h3>🛠️ Uzmanlık Alanları</h3>
@@ -165,7 +196,7 @@ with c2:
     <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
-# --- TEKNİK REHBER (KODUN GERİ KALANI AYNI) ---
+# --- TEKNİK REHBER (AYNI KALDI) ---
 st.header("📡 Teknik Rehber")
 t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
 
