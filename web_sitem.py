@@ -122,10 +122,16 @@ st.markdown(f"""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
     }}
+    .sensor-text {{
+        color: #ffff00 !important;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #000000;
+        font-size: 1.1em;
+    }}
     </style>
     """, unsafe_allow_html=True)
 
-# --- ÜST BÖLÜM ---
+# --- ÜST BÖLÜM (PROFİL) ---
 col1, col2 = st.columns([1, 3])
 with col1:
     try:
@@ -137,11 +143,13 @@ with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
-    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum.")
+    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum. Python dünyasında kendimi geliştiriyorum.")
+    st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)*")     
+    st.write("**(MEVLANA)**")
 
 st.divider()
 
-# --- KONTROL PANELİ (UFALMIŞ BUTONLAR) ---
+# --- KONTROL PANELİ ---
 col_ctrl1, col_ctrl2 = st.columns(2)
 with col_ctrl1:
     st.write("### ⚡ Enerji")
@@ -163,30 +171,45 @@ c1, c2 = st.columns(2)
 with c1:
     st.markdown(f"""<div class="info-box {neon_class}"><h3>🛠️ Uzmanlık Alanları</h3>
     <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
-    <li>Python ile Otomasyon</li></ul></div>""", unsafe_allow_html=True)
+    <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 with c2:
+    linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box {neon_class}"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-    <p>📸 <b>Instagram:</b> @59.utkucimen_</p>
+    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
 st.header("📡 Teknik Rehber")
-tabs = st.tabs(["🧲 Sensörler", "📐 Ohm Yasası"])
-with tabs[0]:
-    st.markdown("""<div class="sensor-card">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</div>""", unsafe_allow_html=True)
-with tabs[1]:
-    v_in = st.number_input("Gerilim (V)", value=220.0)
-    r_in = st.number_input("Direnç (Ω)", value=10.0)
+t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
+
+with t1:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+with t2:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+with t3:
+    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
+with t4:
+    v_in = st.number_input("Gerilim (V)", value=220.0, key="v_calc")
+    r_in = st.number_input("Direnç (Ω)", value=10.0, key="r_calc")
     if r_in > 0:
-        st.success(f"Akım: {v_in/r_in:.2f} Amper")
+        st.markdown(f'<div class="sensor-card"><span class="sensor-text">Hesaplanan Akım: {v_in/r_in:.2f} Amper</span></div>', unsafe_allow_html=True)
+
+# --- PROJELER ---
+st.divider()
+st.header("💻 Projelerim")
+with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
 # --- MÜZİK VE HOBİLER ---
-st.divider()
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 if os.path.exists("sarki.mp3"):
-    st.audio("sarki.mp3")
+    st.audio("sarki.mp3", format="audio/mp3")
+
+st.write("### 🎮 Hobiler")
+st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 # --- ZİYARETÇİ SAYACI ---
 st.divider()
