@@ -43,7 +43,7 @@ profile_rgb_style = """
         border-radius: 20px !important;
         transition: 0.5s;
     }
-""" if st.session_state.bolt_on else "div[data-testid="stImage"] img { border-radius: 20px; }"
+""" if st.session_state.bolt_on else "div[data-testid="st Image"] img { border-radius: 20px; }"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
@@ -232,3 +232,4 @@ else:
 
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
+
