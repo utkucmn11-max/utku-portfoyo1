@@ -1,5 +1,4 @@
 import streamlit as st
-from PIL import Image
 import os
 import base64
 
@@ -75,6 +74,21 @@ st.markdown(f"""
         font-size: 1.1em;
     }}
 
+    /* Ampul Tasarımı */
+    .bulb-container {{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }}
+    .bulb-svg {{
+        width: 60px;
+        transition: 0.5s;
+    }}
+    .bulb-on {{
+        filter: drop-shadow(0 0 25px #ffff00) brightness(1.2);
+    }}
+
     @keyframes float {{
         0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
         50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.5; }}
@@ -110,6 +124,37 @@ with col2:
 
 st.divider()
 
+# --- AMPUL ETKİLEŞİMİ (YENİ EKLEDİĞİMİZ) ---
+if 'bulb_status' not in st.session_state:
+    st.session_state.bulb_status = False
+
+def toggle_bulb():
+    st.session_state.bulb_status = not st.session_state.bulb_status
+
+col_bulb_1, col_bulb_2 = st.columns([1, 2])
+with col_bulb_1:
+    bulb_class = "bulb-on" if st.session_state.bulb_status else ""
+    light_color = "#ffff00" if st.session_state.bulb_status else "#444444"
+    st.markdown(f"""
+        <div class="bulb-container">
+            <svg class="bulb-svg {bulb_class}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10C33.4 10 20 23.4 20 40c0 10.2 5.1 19.3 12.9 24.8 4.2 3 6.6 7.8 6.6 12.9V80h21v-2.3c0-5.1 2.4-9.9 6.6-12.9C74.9 59.3 80 50.2 80 40c0-16.6-13.4-30-30-30z" 
+                      fill="{light_color}" stroke="white" stroke-width="2"/>
+                <rect x="40" y="82" width="20" height="5" fill="#7f8c8d" />
+                <rect x="42" y="89" width="16" height="5" fill="#7f8c8d" />
+            </svg>
+        </div>
+    """, unsafe_allow_html=True)
+    
+with col_bulb_2:
+    st.write("### 💡 Işık Deneyi")
+    btn_label = "Işığı Kapat" if st.session_state.bulb_status else "Işığı Aç"
+    st.button(btn_label, on_click=toggle_bulb)
+    if st.session_state.bulb_status:
+        st.write("Devre tamamlandı! ⚡")
+
+st.divider()
+
 # --- UZMANLIK VE İLETİŞİM ---
 c1, c2 = st.columns(2)
 with c1:
@@ -118,7 +163,6 @@ with c1:
     <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 
 with c2:
-    # LinkedIn linkini buraya ekle Utku
     linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
