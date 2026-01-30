@@ -34,14 +34,19 @@ background_css = f"url(data:image/gif;base64,{bin_str})" if bin_str else "none"
 if 'bolt_on' not in st.session_state:
     st.session_state.bolt_on = False
 
+def toggle_bolt():
+    st.session_state.bolt_on = not st.session_state.bolt_on
+
 # Enerji durumuna göre neon class'ı
 neon_class = "neon-effect" if st.session_state.bolt_on else ""
 
-# CSS içindeki seçici hatasını önlemek için değişkeni güvenli tanımlayalım
-if st.session_state.bolt_on:
-    profile_style = 'div[data-testid="stImage"] img { animation: rgb-anim 3s linear infinite !important; border-radius: 20px !important; }'
-else:
-    profile_style = 'div[data-testid="stImage"] img { border-radius: 20px; border: 2px solid rgba(255,255,255,0.1); }'
+# Profil RGB Efekti (Orijinal yapıyı bozmamak için sadece CSS üzerinden)
+profile_rgb_style = """
+    div[data-testid="stImage"] img {
+        animation: rgb-anim 3s linear infinite !important;
+        border-radius: 20px !important;
+    }
+""" if st.session_state.bolt_on else "div[data-testid='stImage'] img { border-radius: 20px; }"
 
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
@@ -72,9 +77,9 @@ st.markdown(f"""
         padding: 20px; border-radius: 15px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         margin-bottom: 20px; backdrop-filter: blur(10px);
-        transition: 0.5s ease-in-out;
     }}
 
+    /* NEON EFEKTLERİ */
     .neon-effect {{
         border: 2px solid #ffff00 !important;
         box-shadow: 0 0 15px #ffff00, 0 0 30px #ffff00, inset 0 0 10px #ffff00 !important;
@@ -87,20 +92,35 @@ st.markdown(f"""
         100% {{ box-shadow: 0 0 20px #ff0000; border: 3px solid #ff0000; }}
     }}
 
-    {profile_style}
+    {profile_rgb_style}
 
     .sensor-card {{
         background: rgba(0,0,0,0.8);
         padding: 15px;
         border: 1px solid #ffff00;
         border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
     }}
-    
+
     .bolt-container {{ display: flex; justify-content: center; padding: 20px; }}
     .bolt-svg {{ width: 80px; height: 80px; transition: 0.5s; stroke: #444; fill: none; }}
     .bolt-on {{ fill: #ffff00; stroke: #fff; filter: drop-shadow(0 0 20px #ffff00); transform: scale(1.1); }}
 
+    @keyframes float {{
+        0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
+        50% {{ transform: translateY(-25px) rotate(15deg); opacity: 0.5; }}
+        100% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
+    }}
+    .floating-icon {{
+        position: fixed; font-size: 40px;
+        animation: float 5s ease-in-out infinite;
+        z-index: 0; pointer-events: none;
+    }}
     </style>
+    
+    <div class="floating-icon" style="top: 10%; left: 5%;">🛠️</div>
+    <div class="floating-icon" style="top: 20%; right: 10%;">⚡</div>
+    <div class="floating-icon" style="top: 70%; left: 15%;">💻</div>
     """, unsafe_allow_html=True)
 
 # --- ÜST BÖLÜM (PROFİL) ---
@@ -109,20 +129,19 @@ with col1:
     try:
         st.image("profil.jpg", width=300)
     except:
-        st.info("📸 Fotoğraf bulunamadı.")
+        st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
 
 with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
     st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum.")
+    st.write("*(Umut; hiç bitmeyen bahar mevsimidir...)*")     
+    st.write("**(MEVLANA)**")
 
 st.divider()
 
 # --- ŞİMŞEK ETKİLEŞİMİ ---
-def toggle_bolt():
-    st.session_state.bolt_on = not st.session_state.bolt_on
-
 bolt_col1, bolt_col2 = st.columns([1, 2])
 with bolt_col1:
     bolt_status_class = "bolt-on" if st.session_state.bolt_on else ""
@@ -149,24 +168,36 @@ with c1:
     <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
 
 with c2:
+    linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box {neon_class}"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
     <p>📸 <b>Instagram:</b> @59.utkucimen_</p>
     <p>💼 <b>LinkedIn:</b> Utku Çimen</p>
     </div>""", unsafe_allow_html=True)
 
-# --- TEKNİK REHBER ---
+# --- TEKNİK REHBER VE DİĞERLERİ ---
 st.header("📡 Teknik Rehber")
-t1, t2 = st.tabs(["🧲 Sensörler", "📐 Ohm Yasası"])
+t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
 
 with t1:
-    st.markdown("""<div class="sensor-card"><span style="color:#ffff00;">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+    st.markdown("""<div class="sensor-card">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</div>""", unsafe_allow_html=True)
 
-with t2:
-    v_input = st.number_input("Gerilim (Volt)", value=220.0)
-    r_input = st.number_input("Direnç (Ohm)", value=10.0)
+with t4:
+    v_input = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc")
+    r_input = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
     if r_input > 0:
-        st.success(f"Akım: {v_input/r_input:.2f} Amper")
+        st.markdown(f"""<div class="sensor-card">Hesaplanan Akım: {v_input/r_input:.2f} Amper</div>""", unsafe_allow_html=True)
+
+# --- PROJELER, MÜZİK VE HOBİLER ---
+st.divider()
+st.write("### 🎵 Favori Parçam")
+st.write("(AC-DC) BACK-İN-BLACK ")
+
+if os.path.exists("sarki.mp3"):
+    st.audio("sarki.mp3", format="audio/mp3")
+
+st.write("### 🎮 Hobiler")
+st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 # --- ZİYARETÇİ SAYACI ---
 st.divider()
@@ -176,3 +207,4 @@ if 'visited' not in st.session_state:
     v_count = update_visitor_count()
 
 st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+st.caption("© 2026 Mehmet Utku Çimen")
