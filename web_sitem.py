@@ -69,6 +69,16 @@ st.markdown(f"""
         background-color: #000000;
     }}
 
+    /* BUTONLARI UFALTAN CSS */
+    div.stButton > button {{
+        padding: 5px 15px !important;
+        font-size: 14px !important;
+        height: auto !important;
+        width: auto !important;
+        min-width: 150px;
+        border-radius: 8px !important;
+    }}
+
     .stApp::before {{
         content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0.5); backdrop-filter: brightness(0.6); z-index: -1;
@@ -101,8 +111,8 @@ st.markdown(f"""
 
     {profile_rgb_style}
 
-    .bolt-container {{ display: flex; justify-content: center; padding: 20px; }}
-    .bolt-svg {{ width: 80px; height: 80px; transition: 0.5s; stroke: #444; fill: none; }}
+    .bolt-container {{ display: flex; justify-content: center; padding: 10px; }}
+    .bolt-svg {{ width: 60px; height: 60px; transition: 0.5s; stroke: #444; fill: none; }}
     .bolt-on {{ fill: #ffff00; stroke: #fff; filter: drop-shadow(0 0 20px #ffff00); transform: scale(1.1); }}
 
     .sensor-card {{
@@ -111,12 +121,6 @@ st.markdown(f"""
         border: 1px solid #ffff00;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
-    }}
-    .sensor-text {{
-        color: #ffff00 !important;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px #000000;
-        font-size: 1.1em;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -133,25 +137,23 @@ with col2:
     st.title("Mehmet Utku Çimen")
     st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
     st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
-    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum. Python dünyasında kendimi geliştiriyorum.")
-    st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)*")     
-    st.write("**(MEVLANA)**")
+    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum.")
 
 st.divider()
 
-# --- KONTROL PANELİ ---
+# --- KONTROL PANELİ (UFALMIŞ BUTONLAR) ---
 col_ctrl1, col_ctrl2 = st.columns(2)
 with col_ctrl1:
-    st.write("### ⚡ Sistem Enerjisi")
-    btn_text = "Enerjiyi Kes" if st.session_state.bolt_on else "Sisteme Enerji Ver"
-    st.button(btn_text, on_click=toggle_bolt, use_container_width=True)
+    st.write("### ⚡ Enerji")
+    btn_text = "Enerjiyi Kes" if st.session_state.bolt_on else "Enerji Ver"
+    st.button(btn_text, on_click=toggle_bolt)
     bolt_color = "#ffff00" if st.session_state.bolt_on else "#444"
     st.markdown(f'<div class="bolt-container"><svg class="bolt-svg {"bolt-on" if st.session_state.bolt_on else ""}" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="{bolt_color}"/></svg></div>', unsafe_allow_html=True)
 
 with col_ctrl2:
     st.write("### 🖼️ Arka Plan")
     bg_btn_text = "GIF'i Durdur" if st.session_state.bg_animated else "GIF'i Başlat"
-    st.button(bg_btn_text, on_click=toggle_bg, use_container_width=True)
+    st.button(bg_btn_text, on_click=toggle_bg)
     st.write("Durum: " + ("🟢 Hareketli" if st.session_state.bg_animated else "🔴 Sabit"))
 
 st.divider()
@@ -161,20 +163,18 @@ c1, c2 = st.columns(2)
 with c1:
     st.markdown(f"""<div class="info-box {neon_class}"><h3>🛠️ Uzmanlık Alanları</h3>
     <ul><li>Elektrik Devre Tasarımı</li><li>Elektronik Bakım & Onarım</li>
-    <li>Python ile Otomasyon</li><li>3D Printer Model & Baskı</li></ul></div>""", unsafe_allow_html=True)
+    <li>Python ile Otomasyon</li></ul></div>""", unsafe_allow_html=True)
 with c2:
-    linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box {neon_class}"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
+    <p>📸 <b>Instagram:</b> @59.utkucimen_</p>
     </div>""", unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
 st.header("📡 Teknik Rehber")
 tabs = st.tabs(["🧲 Sensörler", "📐 Ohm Yasası"])
 with tabs[0]:
-    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+    st.markdown("""<div class="sensor-card">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</div>""", unsafe_allow_html=True)
 with tabs[1]:
     v_in = st.number_input("Gerilim (V)", value=220.0)
     r_in = st.number_input("Direnç (Ω)", value=10.0)
@@ -186,10 +186,7 @@ st.divider()
 st.write("### 🎵 Favori Parçam")
 st.write("(AC-DC) BACK-İN-BLACK ")
 if os.path.exists("sarki.mp3"):
-    st.audio("sarki.mp3", format="audio/mp3")
-
-st.write("### 🎮 Hobiler")
-st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
+    st.audio("sarki.mp3")
 
 # --- ZİYARETÇİ SAYACI ---
 st.divider()
@@ -197,5 +194,5 @@ v_count = get_visitor_count()
 if 'visited' not in st.session_state:
     st.session_state['visited'] = True
     v_count = update_visitor_count()
-st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+st.metric(label="👤 Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
