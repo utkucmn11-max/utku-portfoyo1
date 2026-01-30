@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 import os
 import base64
 
@@ -45,7 +46,7 @@ st.markdown(f"""
 
     .stApp::before {{
         content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.6); backdrop-filter: brightness(0.5); z-index: -1;
+        background-color: rgba(0, 0, 0, 0.5); backdrop-filter: brightness(0.6); z-index: -1;
     }}
 
     h1, h2, h3, h4, p, li, span, label, div {{
@@ -62,27 +63,22 @@ st.markdown(f"""
 
     .sensor-card {{
         background: rgba(0,0,0,0.8);
-        padding: 15px; border: 1px solid #00f2ff;
-        border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 242, 255, 0.2);
+        padding: 15px;
+        border: 1px solid #ffff00;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.2);
     }}
-    
     .sensor-text {{
-        color: #00f2ff !important; font-weight: bold;
-        text-shadow: 1px 1px 2px #000000; font-size: 1.1em;
+        color: #ffff00 !important;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #000000;
+        font-size: 1.1em;
     }}
 
-    /* ŞİMŞEK EFEKTİ */
-    .bolt-container {{
-        display: flex; justify-content: center; align-items: center; padding: 20px;
-    }}
-    .bolt-svg {{
-        width: 100px; height: 100px; transition: 0.4s; stroke: #444; stroke-width: 2; fill: none;
-    }}
-    .bolt-on {{
-        fill: #00f2ff; stroke: #fff;
-        filter: drop-shadow(0 0 15px #00f2ff) drop-shadow(0 0 30px #00f2ff);
-        transform: scale(1.1);
-    }}
+    /* ŞİMŞEK EFEKTİ CSS */
+    .bolt-container {{ display: flex; justify-content: center; padding: 20px; }}
+    .bolt-svg {{ width: 80px; height: 80px; transition: 0.5s; stroke: #444; fill: none; }}
+    .bolt-on {{ fill: #ffff00; stroke: #fff; filter: drop-shadow(0 0 20px #ffff00); transform: scale(1.1); }}
 
     @keyframes float {{
         0% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
@@ -90,7 +86,8 @@ st.markdown(f"""
         100% {{ transform: translateY(0px) rotate(0deg); opacity: 0.2; }}
     }}
     .floating-icon {{
-        position: fixed; font-size: 40px; animation: float 5s ease-in-out infinite;
+        position: fixed; font-size: 40px;
+        animation: float 5s ease-in-out infinite;
         z-index: 0; pointer-events: none;
     }}
     </style>
@@ -104,43 +101,42 @@ st.markdown(f"""
 col1, col2 = st.columns([1, 3])
 with col1:
     try:
-        st.image("profil.jpg", width=250)
+        st.image("profil.jpg", width=300)
     except:
-        st.info("📸 Fotoğraf (profil.jpg) bekleniyor.")
+        st.info("📸 Fotoğraf (profil.jpg) bulunamadı.")
 
 with col2:
     st.title("Mehmet Utku Çimen")
-    st.subheader("⚡ Elektrik-Elektronik Teknisyeni & Geliştirici")
-    st.write("📍 Tekirdağ | 🎂 20 Yaşında")
-    st.write("Elektrik-elektronik lise mezunuyum. Endüstriyel sistemler ve Python tabanlı otomasyonlarla ilgileniyorum.")
-    st.write("> *'Umut; hiç bitmeyen bahar mevsimidir.'* — Mevlana")
+    st.subheader("Elektrik-Elektronik Teknisyeni & Geliştirici")
+    st.write("📍 Tekirdağ | 🎂 20 Yaşında | 🎓 Elektrik-Elektronik Mezunu")
+    st.write("Merhaba Ben Utku. Elektrik-elektronik lise mezunuyum ve aktif olarak çalışıyorum. Python dünyasında kendimi geliştiriyorum.")
+    st.write("*(Umut; hiç bitmeyen bahar mevsimidir. İçine kar da yağar, fırtına da kopar ama çiçekler hep açar.)*")     
+    st.write("**(MEVLANA)**")
 
 st.divider()
 
-# --- ŞİMŞEK ETKİLEŞİMİ ---
-if 'bolt_active' not in st.session_state:
-    st.session_state.bolt_active = False
+# --- EKLEME: ŞİMŞEK ETKİLEŞİMİ ---
+if 'bolt_on' not in st.session_state:
+    st.session_state.bolt_on = False
 
 def toggle_bolt():
-    st.session_state.bolt_active = not st.session_state.bolt_active
+    st.session_state.bolt_on = not st.session_state.bolt_on
 
-col_bolt_1, col_bolt_2 = st.columns([1, 2])
-with col_bolt_1:
-    bolt_class = "bolt-on" if st.session_state.bolt_active else ""
+bolt_col1, bolt_col2 = st.columns([1, 2])
+with bolt_col1:
+    bolt_status_class = "bolt-on" if st.session_state.bolt_on else ""
+    bolt_color = "#ffff00" if st.session_state.bolt_on else "#444"
     st.markdown(f"""
         <div class="bolt-container">
-            <svg class="bolt-svg {bolt_class}" viewBox="0 0 24 24">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            <svg class="bolt-svg {bolt_status_class}" viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="{bolt_color}"/>
             </svg>
         </div>
     """, unsafe_allow_html=True)
-    
-with col_bolt_2:
+with bolt_col2:
     st.write("### ⚡ Enerji Testi")
-    btn_label = "Sistemi Kapat" if st.session_state.bolt_active else "Sisteme Enerji Ver"
-    st.button(btn_label, on_click=toggle_bolt, use_container_width=True)
-    if st.session_state.bolt_active:
-        st.info("Sistem Aktif: Yüksek Gerilim Tespit Edildi! ⚡")
+    btn_text = "Enerjiyi Kes" if st.session_state.bolt_on else "Sisteme Enerji Ver"
+    st.button(btn_text, on_click=toggle_bolt)
 
 st.divider()
 
@@ -155,8 +151,8 @@ with c2:
     linkedin_url = "https://www.linkedin.com/in/utkucimen" 
     st.markdown(f"""<div class="info-box"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
-    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#00f2ff; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#00f2ff; text-decoration:none;">Utku Çimen</a></p>
+    <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
     </div>""", unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
@@ -164,31 +160,60 @@ st.header("📡 Teknik Rehber")
 t1, t2, t3, t4 = st.tabs(["🧲 İndüktif", "🔮 Kapasitif", "👁️ Optik", "📐 Ohm Yasası"])
 
 with t1:
-    st.write("### 🧲 İndüktif Sensör\nSadece metal nesneleri algılar. Elektromanyetik alan prensibiyle çalışır.")
-    st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal (Output)</span></div>""", unsafe_allow_html=True)
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 🧲 İndüktif\nSadece metal algılar.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+
+with t2:
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 🔮 Kapasitif\nHer türlü nesneyi algılar.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: Sinyal</span></div>""", unsafe_allow_html=True)
+
+with t3:
+    col_a, col_b = st.columns([1, 2])
+    with col_a: st.write("### 👁️ Optik\nIşık kesilmesiyle çalışır.")
+    with col_b:
+        st.markdown("""<div class="sensor-card"><span class="sensor-text">🟤 Kahve: +24V | 🔵 Mavi: 0V | ⚫ Siyah: NO | ⚪ Beyaz: NC</span></div>""", unsafe_allow_html=True)
 
 with t4:
     st.write("### 📐 Ohm Yasası Hesaplayıcı")
     calc_col1, calc_col2 = st.columns(2)
     with calc_col1:
-        v_input = st.number_input("Gerilim (Volt)", value=220.0)
-        r_input = st.number_input("Direnç (Ohm)", value=10.0)
+        v_input = st.number_input("Gerilim (Volt)", value=220.0, key="v_calc")
+        r_input = st.number_input("Direnç (Ohm)", value=10.0, key="r_calc")
         if r_input > 0:
             i_result = v_input / r_input
-            st.markdown(f"""<div class="sensor-card"><span class="sensor-text">Akım: {i_result:.2f} Amper</span></div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div class="sensor-card"><span class="sensor-text">Hesaplanan Akım: {i_result:.2f} Amper</span></div>""", unsafe_allow_html=True)
+    with calc_col2:
+        st.markdown("""<div class="info-box"><b>Formül: V = I × R</b><br>Gerilimi direnç değerine bölerek akımı bulabilirsiniz.</div>""", unsafe_allow_html=True)
 
-# --- ALT BÖLÜM ---
+# --- PROJELER ---
 st.divider()
-st.write("### 🎵 Favori Parçam: AC-DC - BACK IN BLACK")
+st.header("💻 Projelerim")
+with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
+
+# --- MÜZİK VE HOBİLER ---
+st.write("### 🎵 Favori Parçam")
+st.write("(AC-DC) BACK-İN-BLACK ")
+
 if os.path.exists("sarki.mp3"):
-    st.audio("sarki.mp3")
+    st.audio("sarki.mp3", format="audio/mp3")
+else:
+    st.error("❌ 'sarki.mp3' bulunamadı.")
+
+st.write("### 🎮 Hobiler")
+st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
 # --- ZİYARETÇİ SAYACI ---
+st.divider()
 if 'visited' not in st.session_state:
     st.session_state['visited'] = True
     v_count = update_visitor_count()
 else:
     v_count = get_visitor_count()
 
-st.metric(label="👤 Profil Ziyareti", value=v_count)
-st.caption("© 2026 Mehmet Utku Çimen | Tüm Hakları Saklıdır.")
+st.metric(label="👤 Toplam Profil Ziyareti", value=v_count)
+st.caption("© 2026 Mehmet Utku Çimen")
