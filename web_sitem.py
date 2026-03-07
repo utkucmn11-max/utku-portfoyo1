@@ -58,6 +58,11 @@ profile_rgb_style = """
 # --- TASARIM VE EFEKTLER (CSS) ---
 st.markdown(f"""
     <style>
+    /* Global Font Ayarı */
+    html, body, [class*="css"], .stApp {{
+        font-family: 'Arial', sans-serif !important;
+    }}
+
     [data-testid="stSidebar"] {{ display: none; }}
     
     .stApp {{
@@ -69,10 +74,11 @@ st.markdown(f"""
         background-color: #000000;
     }}
 
-    /* BUTONLARI UFALTAN CSS */
+    /* BUTONLARI UFALTAN VE FONTUNU AYARLAYAN CSS */
     div.stButton > button {{
         padding: 5px 15px !important;
         font-size: 14px !important;
+        font-family: 'Arial', sans-serif !important;
         height: auto !important;
         width: auto !important;
         min-width: 150px;
@@ -87,6 +93,7 @@ st.markdown(f"""
     h1, h2, h3, h4, p, li, span, label, div {{
         color: #ffffff !important;
         text-shadow: 2px 2px 4px #000000;
+        font-family: 'Arial', sans-serif !important;
     }}
 
     .info-box {{
@@ -127,6 +134,7 @@ st.markdown(f"""
         font-weight: bold;
         text-shadow: 1px 1px 2px #000000;
         font-size: 1.1em;
+        font-family: 'Arial', sans-serif !important;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -202,8 +210,6 @@ st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
-
-
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
 
@@ -215,4 +221,3 @@ if 'visited' not in st.session_state:
     v_count = update_visitor_count()
 st.metric(label="👤 Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
-
