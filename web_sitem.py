@@ -202,11 +202,7 @@ st.header("💻 Projelerim")
 with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
-# --- MÜZİK VE HOBİLER ---
-st.write("### 🎵 Favori Parçam")
-st.write("(AC-DC) BACK-İN-BLACK ")
-if os.path.exists("sarki.mp3"):
-    st.audio("sarki.mp3", format="audio/mp3")
+
 
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
@@ -219,3 +215,4 @@ if 'visited' not in st.session_state:
     v_count = update_visitor_count()
 st.metric(label="👤 Ziyaret", value=v_count)
 st.caption("© 2026 Mehmet Utku Çimen")
+
