@@ -207,7 +207,14 @@ with t4:
 # --- PROJELER ---
 st.divider()
 st.header("💻 Projelerim")
-with st.expander("🚀 Devam Eden Çalışmalar", expanded=True):
+st.markdown(
+"""
+<div style="display: flex; align-items: center;">
+<h2 style="margin: 0;">🚀 Devam Eden Çalışmalar</h2>
+</div>
+""",
+unsafe_allow_html=True
+)
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
 st.write("### 🎮 Hobiler")
