@@ -207,7 +207,7 @@ with t4:
 # --- PROJELER ---
 st.divider()
 st.header( "💻 Projelerim" )
-with st.expander(" Devam eden çalışmalar ",expanded=True):
+withst.expander(" Devam eden çalışmalar ",expanded=True):
     st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
 
 st.write("### 🎮 Hobiler")
