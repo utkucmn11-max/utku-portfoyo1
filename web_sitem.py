@@ -210,12 +210,7 @@ st.header("💻 Projelerim")
 st.markdown(
 """
 <div style="display: flex; align-items: center;">
-<h2 style="margin: 0;">🚀 Devam Eden Çalışmalar</h2>
-</div>
-""",
-unsafe_allow_html=True
-)
-    st.write("Python tabanlı otomasyon sistemleri üzerine odaklanıyorum.")
+<h2 style="margin: 0;">🚀 Devam Eden Çalışmalar<
 
 st.write("### 🎮 Hobiler")
 st.write("Müzik Dinlemek | Yürüyüş Yapmak | Oyun Oynamak")
