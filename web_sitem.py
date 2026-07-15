@@ -185,7 +185,7 @@ with c2:
     st.markdown(f"""<div class="info-box {neon_class}"><h3>📫 İletişim</h3>
     <p>📧 <b>E-posta:</b> utkucmn11@gmail.com</p>
     <p>📸 <b>Instagram:</b> <a href="https://www.instagram.com/59.utkucimen_/" target="_blank" style="color:#ffff00; text-decoration:none;">@59.utkucimen_</a></p>
-    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">Utku Çimen</a></p>
+    <p>💼 <b>LinkedIn:</b> <a href="{linkedin_url}" target="_blank" style="color:#ffff00; text-decoration:none;">https://www.linkedin.com/in/utku-%C3%A7imen-13aba1340/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BvRvCMPJNRritKdHRkFlotg%3D%3D</a></p>
     </div>""", unsafe_allow_html=True)
 
 # --- TEKNİK REHBER ---
